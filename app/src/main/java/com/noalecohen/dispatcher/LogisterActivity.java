@@ -7,14 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-public class StartupActivity extends AppCompatActivity {
+public class LogisterActivity extends AppCompatActivity {
 
     Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_startup);
+        setContentView(R.layout.activity_logister);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.startup_frame_content, new SplashFragment()).commit();
     }
