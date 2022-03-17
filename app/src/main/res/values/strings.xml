@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Dispatcher</string>
+    <string name="title_splash">Dispatcher</string>
 </resources>
