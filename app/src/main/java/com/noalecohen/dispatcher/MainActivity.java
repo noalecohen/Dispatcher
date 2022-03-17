@@ -16,14 +16,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initializeView();
+        bindingView();
+        setBottomNavigation();
     }
 
-    private void initializeView() {
+    private void bindingView(){
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         fragmentManager = getSupportFragmentManager();
+    }
 
+    private void setBottomNavigation() {
+        binding.homePageBottomNav.getTabAt(1).select();
         binding.homePageBottomNav.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
