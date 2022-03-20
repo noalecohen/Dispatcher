@@ -3,8 +3,8 @@ package model
 import java.io.Serializable
 
 data class Article(
-    var Title: String?,
-    var ImageUrl: String?,
-    var Author: String?,
-    var Body: String?
+    var title: String?,
+    var imageUrl: String?,
+    var author: String?,
+    var body: String?
 ) : Serializable

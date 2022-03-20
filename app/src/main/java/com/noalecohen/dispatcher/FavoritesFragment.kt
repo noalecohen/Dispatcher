@@ -22,9 +22,9 @@ class FavoritesFragment : BaseFragment() {
 
     private fun displayAuthor() {
         var authors = ""
-        for(article in articleList) {
-            if(article.Author != null) {
-                authors += article.Author
+        for (article in articleList) {
+            if (article.author != null) {
+                authors += article.author
             }
             authors += "\n\n"
         }

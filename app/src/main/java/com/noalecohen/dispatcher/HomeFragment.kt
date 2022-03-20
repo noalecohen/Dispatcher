@@ -22,14 +22,14 @@ class HomeFragment : BaseFragment() {
     private fun displayBody() {
         var bodies = ""
 
-        for(article in articleList) {
-            val a = article.Body?.split(" ")
-            if(a != null){
-                if(a.isNotEmpty()){
-                    bodies += a[0]
+        for (article in articleList) {
+            val articleBody = article.body?.split(" ")
+            if (articleBody != null) {
+                if (articleBody.isNotEmpty()) {
+                    bodies += articleBody[0]
                 }
-                if(a.size >= 2){
-                    bodies += " ${a[1]}"
+                if (articleBody.size >= 2) {
+                    bodies += " ${articleBody[1]}"
                 }
             }
             bodies += "\n\n"

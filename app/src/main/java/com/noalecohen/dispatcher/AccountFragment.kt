@@ -21,9 +21,9 @@ class AccountFragment : BaseFragment() {
 
     private fun displayTitles() {
         var titles = ""
-        for(article in articleList) {
-            if(article.Title != null) {
-                titles += article.Title
+        for (article in articleList) {
+            if (article.title != null) {
+                titles += article.title
             }
             titles += "\n\n"
         }

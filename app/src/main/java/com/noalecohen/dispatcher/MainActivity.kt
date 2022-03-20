@@ -1,6 +1,7 @@
 package com.noalecohen.dispatcher
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.tabs.TabLayout
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
                     2 -> fragmentManager!!.beginTransaction()
                         .replace(binding.homePageFrameContent.id, FavoritesFragment()).commit()
                     else -> {
+                        Log.d("TAG", "Tab not found")
                     }
                 }
             }

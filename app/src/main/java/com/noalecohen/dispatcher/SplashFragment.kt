@@ -24,7 +24,7 @@ class SplashFragment : Fragment() {
     }
 
     private fun toMainActivity() {
-        Timer("Splash", false).schedule(3000){
+        Timer("Splash", false).schedule(3000) {
             val intent = Intent(context, MainActivity::class.java)
             startActivity(intent)
         }

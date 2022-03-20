@@ -34,7 +34,7 @@ android {
     }
     flavorDimensions 'environment'
     productFlavors {
-        dev{
+        dev {
             applicationIdSuffix ".dev"
             dimension 'environment'
         }
@@ -61,6 +61,3 @@ dependencies {
     implementation "androidx.core:core-ktx:1.7.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
-//repositories {
-//    mavenCentral()
-//}
