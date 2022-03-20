@@ -6,4 +6,7 @@
     <string name="search">Search</string>
     <string name="notifications">Notifications</string>
     <string name="title_splash">Dispatcher</string>
+    <string name="account_tab_text">Account Tab</string>
+    <string name="favorites_tab_text">Favorites Tab</string>
+    <string name="home_tab_text">Home Tab</string>
 </resources>
