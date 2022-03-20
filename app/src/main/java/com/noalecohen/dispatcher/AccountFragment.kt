@@ -1,18 +1,32 @@
 package com.noalecohen.dispatcher
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.fragment.app.Fragment
-import com.noalecohen.dispatcher.R
+import android.view.ViewGroup
+import com.noalecohen.dispatcher.databinding.FragmentAccountBinding
+import model.BaseFragment
 
-class AccountFragment : Fragment() {
+class AccountFragment : BaseFragment() {
+    private lateinit var binding: FragmentAccountBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false)
+        binding = FragmentAccountBinding.inflate(inflater, container, false)
+        displayTitles()
+        return binding.root
+    }
+
+    private fun displayTitles() {
+        var titles = ""
+        for(article in articleList) {
+            if(article.Title != null) {
+                titles += article.Title
+            }
+            titles += "\n\n"
+        }
+        binding.accountText.text = titles
     }
 }
