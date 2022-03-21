@@ -4,16 +4,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class AccountViewModel : ViewModel() {
-    val titles: MutableLiveData<List<String?>> by lazy {
-        MutableLiveData<List<String?>>(initTitles())
+    val titles: MutableLiveData<MutableList<String?>> by lazy {
+        MutableLiveData<MutableList<String?>>(initTitles())
     }
 
-    private fun initTitles(): List<String?> {
-        return listOf(null, "Title 2", "Title 3")
+    private fun initTitles(): MutableList<String?> {
+        return mutableListOf(null, "Title 2", "Title 3")
     }
 
     fun addTitle(title: String) {
-        val list = titles.value
-        titles.postValue(list?.plus(title))
+        titles.value?.add(title)
+        titles.postValue(titles.value)
     }
 }
