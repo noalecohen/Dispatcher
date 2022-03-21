@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/nav_account"
+    <item
+        android:id="@+id/nav_account"
         android:title="@string/account"
         android:icon="@drawable/ic_account"
-        android:visible="true"/>
+        android:visible="true" />
 
-    <item android:id="@+id/nav_home"
+    <item
+        android:id="@+id/nav_home"
         android:title="@string/home"
         android:icon="@drawable/ic_unpressed_home"
-        android:visible="true"/>
+        android:visible="true" />
 
-    <item android:id="@+id/nav_favorites"
+    <item
+        android:id="@+id/nav_favorites"
         android:title="@string/favorites"
         android:icon="@drawable/ic_unpressed_favorites"
-        android:visible="true"/>
+        android:visible="true" />
 
 </menu>
