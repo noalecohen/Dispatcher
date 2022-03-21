@@ -14,15 +14,17 @@ class HomeFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        displayBody()
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        displayBody()
+    }
+
     private fun displayBody() {
-        var bodies = articleList.filter { it.body != null }
-            .map { it.body?.split(" ")?.take(2)?.joinToString(" ") }
+        var bodies = articleList.mapNotNull { it.body?.split(" ")?.take(2)?.joinToString(" ") }
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, bodies)
         binding.homeListView.adapter = adapter
     }

@@ -1,38 +1,36 @@
 package model
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 
-abstract class BaseFragment() : Fragment() {
-    lateinit var articleList: Array<Article>
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+abstract class BaseFragment : Fragment() {
+    var articleList = ArrayList<Article>()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initArticleList()
     }
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        initArticleList()
-//    }
 
-    private fun initArticleList(): Unit {
-        var article1 = Article(
+    private fun initArticleList() {
+        val article1 = Article(
             null,
             null,
             null,
             null,
         )
-        var article2 = Article(
+        val article2 = Article(
             "Title 2",
             null,
             "Ben Cohen",
             "Body 2 Text"
         )
-        var article3 = Article(
+        val article3 = Article(
             "Title 3",
             null,
             "Omri Ovadia",
             "Body"
         )
-        articleList = arrayOf(article1, article2, article3)
+        articleList.addAll(listOf(article1, article2, article3))
     }
 }

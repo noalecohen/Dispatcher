@@ -15,14 +15,17 @@ class FavoritesFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentFavoritesBinding.inflate(inflater, container, false)
-        displayAuthor()
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        displayAuthor()
+    }
+
     private fun displayAuthor() {
-        var authors = articleList.map { it.author }.filterNotNull()
+        var authors = articleList.mapNotNull { it.author }
         val adapter = ArrayAdapter<String?>(requireContext(), R.layout.list_item, authors)
         binding.favoritesListView.adapter = adapter
     }

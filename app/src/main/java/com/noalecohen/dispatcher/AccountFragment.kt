@@ -15,14 +15,17 @@ class AccountFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentAccountBinding.inflate(inflater, container, false)
-        displayTitles()
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        displayTitles()
+    }
+
     private fun displayTitles() {
-        var titles = articleList.map { it.title }.filterNotNull()
+        var titles = articleList.mapNotNull { it.title }
         val adapter = ArrayAdapter<String?>(requireContext(), layout.list_item, titles)
         binding.accountListView.adapter = adapter
     }
