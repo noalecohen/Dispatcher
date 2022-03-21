@@ -25,6 +25,11 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeObservers()
+        binding.homeSaveButton.setOnClickListener {
+            val body = binding.homeEditText.text.toString()
+            binding.homeEditText.text.clear()
+            model.addBody(body)
+        }
     }
 
     private fun subscribeObservers() {

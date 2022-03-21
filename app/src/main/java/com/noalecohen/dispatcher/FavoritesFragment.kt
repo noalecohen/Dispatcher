@@ -25,6 +25,11 @@ class FavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeObservers()
+        binding.favoritesSaveButton.setOnClickListener {
+            val author = binding.favoritesEditText.text.toString()
+            binding.favoritesEditText.text.clear()
+            model.addAuthor(author)
+        }
     }
 
     private fun subscribeObservers() {

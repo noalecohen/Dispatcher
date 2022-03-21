@@ -4,11 +4,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class FavoritesViewModel : ViewModel() {
-    val authors: MutableLiveData<List<String?>> by lazy {
-        MutableLiveData<List<String?>>(initAuthors())
+    val authors: MutableLiveData<MutableList<String?>> by lazy {
+        MutableLiveData<MutableList<String?>>(initAuthors())
     }
 
-    private fun initAuthors(): List<String?> {
-        return listOf(null, "Ben Cohen", "Omri Ovadia")
+    private fun initAuthors(): MutableList<String?> {
+        return mutableListOf(null, "Ben Cohen", "Omri Ovadia")
+    }
+
+    fun addAuthor(author: String) {
+        authors.value?.add(author)
+        authors.notifyObserver()
     }
 }
