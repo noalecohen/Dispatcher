@@ -5,11 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.noalecohen.dispatcher.databinding.FragmentHomeBinding
-import model.BaseFragment
+import viewModel.HomeViewModel
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+    private val model: HomeViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -20,12 +24,14 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        displayBody()
+        subscribeObservers()
     }
 
-    private fun displayBody() {
-        var bodies = articleList.mapNotNull { it.body?.split(" ")?.take(2)?.joinToString(" ") }
-        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, bodies)
-        binding.homeListView.adapter = adapter
+    private fun subscribeObservers() {
+        model.bodies.observe(viewLifecycleOwner) { bodies ->
+            var bodiesNotNull = bodies.mapNotNull { it?.split(" ")?.take(2)?.joinToString(" ") }
+            val adapter = ArrayAdapter(requireContext(), R.layout.list_item, bodiesNotNull)
+            binding.homeListView.adapter = adapter
+        }
     }
 }
