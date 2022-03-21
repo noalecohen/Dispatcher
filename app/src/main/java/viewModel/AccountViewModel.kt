@@ -14,6 +14,6 @@ class AccountViewModel : ViewModel() {
 
     fun addTitle(title: String) {
         titles.value?.add(title)
-        titles.postValue(titles.value)
+        titles.notifyObserver()
     }
 }
