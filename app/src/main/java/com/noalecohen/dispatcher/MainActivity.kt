@@ -10,10 +10,10 @@ import com.noalecohen.dispatcher.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     var fragmentManager: FragmentManager? = null
-    protected override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingView()
-        setBottomNavigation()
+        setBottomNavigation(savedInstanceState)
     }
 
     private fun bindingView() {
@@ -22,8 +22,13 @@ class MainActivity : AppCompatActivity() {
         fragmentManager = supportFragmentManager
     }
 
-    private fun setBottomNavigation() {
-        binding.homePageBottomNav.getTabAt(1)?.select()
+    private fun setBottomNavigation(savedInstanceState: Bundle?) {
+        var tabIndex = 1
+        if (savedInstanceState != null) {
+            tabIndex = savedInstanceState.get("index") as Int
+        }
+        binding.homePageBottomNav.getTabAt(tabIndex)?.select()
+
         binding.homePageBottomNav.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -43,5 +48,11 @@ class MainActivity : AppCompatActivity() {
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val index = binding.homePageBottomNav.selectedTabPosition
+        outState.putInt("index", index)
     }
 }

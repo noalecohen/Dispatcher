@@ -1,6 +1,7 @@
 package com.noalecohen.dispatcher
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,10 @@ class AccountFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d(
+            "TAG",
+            "New instance of AccountFragment created, with orientation: " + resources.configuration.orientation.toString()
+        )
         binding = FragmentAccountBinding.inflate(inflater, container, false)
         return binding.root
     }
