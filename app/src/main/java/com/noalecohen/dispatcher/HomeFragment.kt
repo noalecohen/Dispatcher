@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import com.noalecohen.dispatcher.databinding.FragmentHomeBinding
 import model.BaseFragment
 
@@ -20,20 +21,9 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun displayBody() {
-        var bodies = ""
-
-        for (article in articleList) {
-            val articleBody = article.body?.split(" ")
-            if (articleBody != null) {
-                if (articleBody.isNotEmpty()) {
-                    bodies += articleBody[0]
-                }
-                if (articleBody.size >= 2) {
-                    bodies += " ${articleBody[1]}"
-                }
-            }
-            bodies += "\n\n"
-        }
-        binding.homeText.text = bodies
+        var bodies = articleList.filter { it.body != null }
+            .map { it.body?.split(" ")?.take(2)?.joinToString(" ") }
+        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, bodies)
+        binding.homeListView.adapter = adapter
     }
 }

@@ -16,7 +16,7 @@ abstract class BaseFragment() : Fragment() {
 
     private fun initArticleList(): Unit {
         var article1 = Article(
-            "Title 1",
+            null,
             null,
             null,
             null,
