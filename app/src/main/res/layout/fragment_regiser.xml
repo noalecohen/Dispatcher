@@ -4,39 +4,108 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_color"
+    android:background="@color/auth_background"
     tools:context=".RegiserFragment">
 
-    <ImageView
-        android:id="@+id/register_logo"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginVertical="36dp"
-        app:layout_constraintBottom_toTopOf="@id/register_frame_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.25"
+    <TextView
+        android:id="@+id/login_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/register_title"
+        android:textColor="@color/auth_titles"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/login_email_edit_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.5"
-        app:srcCompat="@mipmap/ic_splash" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/register_frame_content"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/white"
+    <EditText
+        android:id="@+id/login_email_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/auth_email_hint"
+        android:textColorHint="@color/auth_titles"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/login_password_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_title" />
+
+    <EditText
+        android:id="@+id/login_password_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/edit_text_background"
+        android:drawableEnd="@drawable/ic_invisible_password"
+        android:drawablePadding="20dp"
+        android:hint="@string/auth_password_hint"
+        android:inputType="numberPassword"
+        android:paddingRight="20dp"
+        android:textColorHint="@color/auth_titles"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/register_verify_password_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_email_edit_text" />
+
+    <EditText
+        android:id="@+id/register_verify_password_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/edit_text_background"
+        android:drawableEnd="@drawable/ic_invisible_password"
+        android:drawablePadding="20dp"
+        android:hint="@string/auth_verify_password_hint"
+        android:inputType="numberPassword"
+        android:paddingRight="20dp"
+        android:textColorHint="@color/auth_titles"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/separator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_password_edit_text" />
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@color/stroke"
+        app:layout_constraintBottom_toTopOf="@id/login_signin_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/register_verify_password_edit_text" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/login_signin_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:backgroundTint="@color/primary_button"
+        android:text="@string/auth_signup_button_text"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/login_signup_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separator"
+        app:icon="@drawable/ic_arrow_right"
+        app:iconGravity="textEnd"/>
+
+    <Button
+        android:id="@+id/login_signup_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/auth_secondary_button_background"
+        android:text="@string/auth_login_button_text"
+        android:textColor="@color/secondary_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_logo">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Signup"
-            app:layout_constraintTop_toTopOf="@id/register_frame_content"
-            app:layout_constraintStart_toStartOf="@id/register_frame_content" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@id/login_signin_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

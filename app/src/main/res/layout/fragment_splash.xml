@@ -7,18 +7,6 @@
     android:background="@color/primary_color"
     tools:context=".SplashFragment">
 
-    <ImageView
-        android:id="@+id/splash_imageView_logo"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.25"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.5"
-        app:srcCompat="@mipmap/ic_splash" />
-
     <TextView
         android:id="@+id/splash_textView_title"
         android:layout_width="match_parent"
@@ -28,8 +16,9 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/splash_imageView_logo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

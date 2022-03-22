@@ -9,4 +9,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary_color">#262146</color>
     <color name="icons_color">#B6B6EA</color>
+    <color name="stroke">#D9DBE9</color>
+    <color name="auth_background">#F8F8FF</color>
+    <color name="primary_button">#0058B9</color>
+    <color name="secondary_button">#F1F1F9</color>
+    <color name="secondary_button_text">#5A5A89</color>
+    <color name="auth_titles">#5A5A89</color>
 </resources>
