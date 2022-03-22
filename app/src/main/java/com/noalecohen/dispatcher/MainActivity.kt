@@ -6,9 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.tabs.TabLayout
 import com.noalecohen.dispatcher.databinding.ActivityMainBinding
-import util.DEFAULT_TAB_INDEX
-import util.NOT_FOUND
-import util.TAB_INDEX
+
+const val TAB_INDEX = "index"
+const val DEFAULT_TAB_INDEX = 1
+const val NOT_FOUND = "Not Found"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

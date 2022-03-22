@@ -3,7 +3,8 @@ package viewModel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import util.NEW_INSTANCE_INDICATOR
+
+const val NEW_INSTANCE_INDICATOR = "Instance Indicator"
 
 class AccountViewModel : ViewModel() {
     val titles: MutableLiveData<MutableList<String?>> by lazy {

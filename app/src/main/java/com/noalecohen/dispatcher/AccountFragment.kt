@@ -10,8 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.noalecohen.dispatcher.R.layout
 import com.noalecohen.dispatcher.databinding.FragmentAccountBinding
-import util.NEW_INSTANCE_INDICATOR
 import viewModel.AccountViewModel
+
+const val NEW_INSTANCE_INDICATOR = "Instance Indicator"
 
 class AccountFragment : Fragment() {
     private val model: AccountViewModel by activityViewModels()
