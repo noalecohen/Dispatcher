@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dispatcher">
         <activity
-            android:name=".LogisterActivity"
+            android:name=".AuthActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
