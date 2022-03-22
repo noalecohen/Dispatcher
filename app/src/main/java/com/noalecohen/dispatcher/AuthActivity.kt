@@ -1,8 +1,6 @@
 package com.noalecohen.dispatcher
 
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.noalecohen.dispatcher.databinding.ActivityAuthBinding
 
@@ -18,7 +16,7 @@ class AuthActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         val fragmentManager = supportFragmentManager
-        fragmentManager.beginTransaction().replace(R.id.startup_frame_content, LoginFragment())
+        fragmentManager.beginTransaction().replace(R.id.startup_frame_content, SplashFragment())
             .commit()
     }
 
