@@ -8,11 +8,18 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.noalecohen.dispatcher.databinding.FragmentFavoritesBinding
+import util.isValidInput
 import viewModel.FavoritesViewModel
 
 class FavoritesFragment : Fragment() {
-    private lateinit var binding: FragmentFavoritesBinding
     private val model: FavoritesViewModel by activityViewModels()
+    private lateinit var binding: FragmentFavoritesBinding
+    private lateinit var adapter: ArrayAdapter<String>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        adapter = ArrayAdapter(requireContext(), R.layout.list_item, mutableListOf())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,19 +31,25 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.favoritesListView.adapter = adapter
         subscribeObservers()
+        setSaveButton()
+    }
+
+    private fun setSaveButton() {
         binding.favoritesSaveButton.setOnClickListener {
             val author = binding.favoritesEditText.text.toString()
+            if (isValidInput(binding.favoritesEditText.text.toString())) {
+                model.addAuthor(author)
+            }
             binding.favoritesEditText.text.clear()
-            model.addAuthor(author)
         }
     }
 
     private fun subscribeObservers() {
         model.authors.observe(viewLifecycleOwner) { authors ->
             var authorsNotNull = authors.filterNotNull()
-            val adapter = ArrayAdapter(requireContext(), R.layout.list_item, authorsNotNull)
-            binding.favoritesListView.adapter = adapter
+            adapter.update(authorsNotNull)
         }
     }
 }

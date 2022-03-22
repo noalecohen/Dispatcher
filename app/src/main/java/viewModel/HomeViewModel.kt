@@ -9,7 +9,7 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun initBodies(): MutableList<String?> {
-        return mutableListOf(null, "Body 2 Text", "3")
+        return mutableListOf(null, "Body 2 Text", "Body 3")
     }
 
     fun addBody(body: String) {
