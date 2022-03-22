@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.noalecohen.dispatcher.databinding.FragmentFavoritesBinding
-import util.isValidInput
 import viewModel.FavoritesViewModel
 
 class FavoritesFragment : Fragment() {
@@ -39,7 +38,7 @@ class FavoritesFragment : Fragment() {
     private fun setSaveButton() {
         binding.favoritesSaveButton.setOnClickListener {
             val author = binding.favoritesEditText.text.toString()
-            if (isValidInput(binding.favoritesEditText.text.toString())) {
+            if (binding.favoritesEditText.isValidInput()) {
                 model.addAuthor(author)
             }
             binding.favoritesEditText.text.clear()

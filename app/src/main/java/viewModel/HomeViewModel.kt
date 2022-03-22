@@ -14,6 +14,6 @@ class HomeViewModel : ViewModel() {
 
     fun addBody(body: String) {
         bodies.value?.add(body)
-        bodies.notifyObserver()
+        bodies.resetValue()
     }
 }

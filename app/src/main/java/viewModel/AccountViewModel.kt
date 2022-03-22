@@ -3,6 +3,7 @@ package viewModel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import util.NEW_INSTANCE_INDICATOR
 
 class AccountViewModel : ViewModel() {
     val titles: MutableLiveData<MutableList<String?>> by lazy {
@@ -10,12 +11,12 @@ class AccountViewModel : ViewModel() {
     }
 
     private fun initTitles(): MutableList<String?> {
-        Log.d("TAG", "New instance of AccountViewModel created")
+        Log.d(NEW_INSTANCE_INDICATOR, "New instance of AccountViewModel created")
         return mutableListOf(null, "Title 2", "Title 3")
     }
 
     fun addTitle(title: String) {
         titles.value?.add(title)
-        titles.notifyObserver()
+        titles.resetValue()
     }
 }

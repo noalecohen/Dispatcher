@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.noalecohen.dispatcher.databinding.FragmentHomeBinding
-import util.isValidInput
 import viewModel.HomeViewModel
 
 class HomeFragment : Fragment() {
@@ -39,7 +38,7 @@ class HomeFragment : Fragment() {
     private fun setSaveButton() {
         binding.homeSaveButton.setOnClickListener {
             val body = binding.homeEditText.text.toString()
-            if (isValidInput(binding.homeEditText.text.toString())) {
+            if (binding.homeEditText.isValidInput()) {
                 model.addBody(body)
             }
             binding.homeEditText.text.clear()
@@ -48,7 +47,8 @@ class HomeFragment : Fragment() {
 
     private fun subscribeObservers() {
         model.bodies.observe(viewLifecycleOwner) { bodies ->
-            var bodiesNotNull = bodies.mapNotNull { it?.split(" ")?.take(2)?.joinToString(" ") }
+            var bodiesNotNull =
+                bodies.filterNotNull().map { it.split(" ").take(2).joinToString(" ") }
             adapter.update(bodiesNotNull)
         }
     }

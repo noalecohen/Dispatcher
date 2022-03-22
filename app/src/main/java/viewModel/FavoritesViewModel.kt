@@ -14,6 +14,6 @@ class FavoritesViewModel : ViewModel() {
 
     fun addAuthor(author: String) {
         authors.value?.add(author)
-        authors.notifyObserver()
+        authors.resetValue()
     }
 }

@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.noalecohen.dispatcher.R.layout
 import com.noalecohen.dispatcher.databinding.FragmentAccountBinding
-import util.isValidInput
+import util.NEW_INSTANCE_INDICATOR
 import viewModel.AccountViewModel
 
 class AccountFragment : Fragment() {
@@ -28,8 +28,8 @@ class AccountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.d(
-            "TAG",
-            "New instance of AccountFragment created, with orientation: " + resources.configuration.orientation.toString()
+            NEW_INSTANCE_INDICATOR,
+            "New instance of AccountFragment created, with orientation: ${resources.configuration.orientation}"
         )
         binding = FragmentAccountBinding.inflate(inflater, container, false)
         return binding.root
@@ -45,7 +45,7 @@ class AccountFragment : Fragment() {
     private fun setSaveButton() {
         binding.accountSaveButton.setOnClickListener {
             val title = binding.accountEditText.text.toString()
-            if (isValidInput(binding.accountEditText.text.toString())) {
+            if (binding.accountEditText.isValidInput()) {
                 model.addTitle(title)
             }
             binding.accountEditText.text.clear()
