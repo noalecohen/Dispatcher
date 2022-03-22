@@ -1,32 +1,62 @@
 package com.noalecohen.dispatcher
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.noalecohen.dispatcher.R.layout
 import com.noalecohen.dispatcher.databinding.FragmentAccountBinding
-import model.BaseFragment
+import viewModel.AccountViewModel
 
-class AccountFragment : BaseFragment() {
+const val NEW_INSTANCE_INDICATOR = "Instance Indicator"
+
+class AccountFragment : Fragment() {
+    private val model: AccountViewModel by activityViewModels()
     private lateinit var binding: FragmentAccountBinding
+    private lateinit var adapter: ArrayAdapter<String>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        adapter = ArrayAdapter(requireContext(), layout.list_item, mutableListOf())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d(
+            NEW_INSTANCE_INDICATOR,
+            "New instance of AccountFragment created, with orientation: ${resources.configuration.orientation}"
+        )
         binding = FragmentAccountBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        displayTitles()
+        binding.accountListView.adapter = adapter
+        subscribeObservers()
+        setSaveButton()
     }
 
-    private fun displayTitles() {
-        var titles = articleList.mapNotNull { it.title }
-        val adapter = ArrayAdapter<String?>(requireContext(), layout.list_item, titles)
-        binding.accountListView.adapter = adapter
+    private fun setSaveButton() {
+        binding.accountSaveButton.setOnClickListener {
+            val title = binding.accountEditText.text.toString()
+            if (binding.accountEditText.isValidInput()) {
+                model.addTitle(title)
+            }
+            binding.accountEditText.text.clear()
+        }
+    }
+
+    private fun subscribeObservers() {
+        model.titles.observe(viewLifecycleOwner) { titles ->
+            val titlesNotNull = titles.filterNotNull()
+            adapter.update(titlesNotNull)
+        }
     }
 }

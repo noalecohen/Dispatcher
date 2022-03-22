@@ -1,6 +1,7 @@
 package com.noalecohen.dispatcher
 
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import model.BaseFragment
 
@@ -13,4 +14,8 @@ fun View.showView(boolean: Boolean): View {
         View.INVISIBLE
     }
     return this
+}
+
+fun EditText.isValidInput(): Boolean {
+    return this.text.filterNot { it.isWhitespace() }.isNotEmpty()
 }

@@ -7,13 +7,17 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.tabs.TabLayout
 import com.noalecohen.dispatcher.databinding.ActivityMainBinding
 
+const val TAB_INDEX = "index"
+const val DEFAULT_TAB_INDEX = 1
+const val NOT_FOUND = "Not Found"
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     var fragmentManager: FragmentManager? = null
-    protected override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingView()
-        setBottomNavigation()
+        setBottomNavigation(savedInstanceState)
     }
 
     private fun bindingView() {
@@ -22,8 +26,13 @@ class MainActivity : AppCompatActivity() {
         fragmentManager = supportFragmentManager
     }
 
-    private fun setBottomNavigation() {
-        binding.homePageBottomNav.getTabAt(1)?.select()
+    private fun setBottomNavigation(savedInstanceState: Bundle?) {
+        var tabIndex = DEFAULT_TAB_INDEX
+        if (savedInstanceState != null) {
+            tabIndex = savedInstanceState.get(TAB_INDEX) as Int
+        }
+        binding.homePageBottomNav.getTabAt(tabIndex)?.select()
+
         binding.homePageBottomNav.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -35,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                     2 -> fragmentManager!!.beginTransaction()
                         .replace(binding.homePageFrameContent.id, FavoritesFragment()).commit()
                     else -> {
-                        Log.d("TAG", "Tab not found")
+                        Log.d(NOT_FOUND, "Tab not found")
                     }
                 }
             }
@@ -43,5 +52,11 @@ class MainActivity : AppCompatActivity() {
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val index = binding.homePageBottomNav.selectedTabPosition
+        outState.putInt(TAB_INDEX, index)
     }
 }
