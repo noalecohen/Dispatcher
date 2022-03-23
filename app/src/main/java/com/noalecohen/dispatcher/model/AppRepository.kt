@@ -1,4 +1,4 @@
-package model
+package com.noalecohen.dispatcher.model
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult

@@ -1,4 +1,4 @@
-package model
+package com.noalecohen.dispatcher.model
 
 import android.os.Bundle
 import android.view.View

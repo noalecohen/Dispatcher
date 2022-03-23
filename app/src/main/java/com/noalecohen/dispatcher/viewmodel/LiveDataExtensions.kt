@@ -1,4 +1,4 @@
-package viewModel
+package com.noalecohen.dispatcher.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 

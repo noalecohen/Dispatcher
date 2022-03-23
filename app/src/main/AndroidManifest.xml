@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dispatcher">
         <activity
-            android:name="view.AuthActivity"
+            android:name="com.noalecohen.dispatcher.view.AuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="view.MainActivity"
+            android:name="com.noalecohen.dispatcher.view.MainActivity"
             android:exported="true" />
     </application>
 

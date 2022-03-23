@@ -1,4 +1,4 @@
-package view
+package com.noalecohen.dispatcher.view
 
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +12,7 @@ import com.noalecohen.dispatcher.R.layout
 import com.noalecohen.dispatcher.databinding.FragmentAccountBinding
 import com.noalecohen.dispatcher.isValidInput
 import com.noalecohen.dispatcher.update
-import viewModel.AccountViewModel
+import com.noalecohen.dispatcher.viewmodel.AccountViewModel
 
 
 class AccountFragment : Fragment() {

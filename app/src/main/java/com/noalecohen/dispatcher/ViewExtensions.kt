@@ -3,7 +3,7 @@ package com.noalecohen.dispatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
-import model.BaseFragment
+import com.noalecohen.dispatcher.model.BaseFragment
 
 fun BaseFragment.displayToast(str: String) = Toast.makeText(context, str, Toast.LENGTH_LONG).show()
 

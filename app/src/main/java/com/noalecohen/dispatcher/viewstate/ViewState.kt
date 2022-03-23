@@ -1,4 +1,4 @@
-package viewstate
+package com.noalecohen.dispatcher.viewstate
 
 import com.google.firebase.auth.FirebaseUser
 

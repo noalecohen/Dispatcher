@@ -1,4 +1,4 @@
-package model
+package com.noalecohen.dispatcher.model
 
 import java.io.Serializable
 

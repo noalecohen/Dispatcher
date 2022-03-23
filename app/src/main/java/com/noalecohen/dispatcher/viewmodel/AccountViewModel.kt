@@ -1,4 +1,4 @@
-package viewModel
+package com.noalecohen.dispatcher.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData

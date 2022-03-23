@@ -1,4 +1,4 @@
-package view
+package com.noalecohen.dispatcher.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.databinding.FragmentSplashBinding
-import viewModel.AuthViewModel
+import com.noalecohen.dispatcher.viewmodel.AuthViewModel
 
 class SplashFragment : Fragment() {
     private val model: AuthViewModel by activityViewModels()

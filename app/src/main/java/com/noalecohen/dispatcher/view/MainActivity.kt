@@ -1,4 +1,4 @@
-package view
+package com.noalecohen.dispatcher.view
 
 import android.os.Bundle
 import android.util.Log

@@ -1,4 +1,4 @@
-package view
+package com.noalecohen.dispatcher.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,14 +8,14 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.noalecohen.dispatcher.R
-import com.noalecohen.dispatcher.databinding.FragmentHomeBinding
+import com.noalecohen.dispatcher.databinding.FragmentFavoritesBinding
 import com.noalecohen.dispatcher.isValidInput
 import com.noalecohen.dispatcher.update
-import viewModel.HomeViewModel
+import com.noalecohen.dispatcher.viewmodel.FavoritesViewModel
 
-class HomeFragment : Fragment() {
-    private val model: HomeViewModel by activityViewModels()
-    private lateinit var binding: FragmentHomeBinding
+class FavoritesFragment : Fragment() {
+    private val model: FavoritesViewModel by activityViewModels()
+    private lateinit var binding: FragmentFavoritesBinding
     private lateinit var adapter: ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,32 +27,31 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.homeListView.adapter = adapter
+        binding.favoritesListView.adapter = adapter
         subscribeObservers()
         setSaveButton()
     }
 
     private fun setSaveButton() {
-        binding.homeSaveButton.setOnClickListener {
-            val body = binding.homeEditText.text.toString()
-            if (binding.homeEditText.isValidInput()) {
-                model.addBody(body)
+        binding.favoritesSaveButton.setOnClickListener {
+            val author = binding.favoritesEditText.text.toString()
+            if (binding.favoritesEditText.isValidInput()) {
+                model.addAuthor(author)
             }
-            binding.homeEditText.text.clear()
+            binding.favoritesEditText.text.clear()
         }
     }
 
     private fun subscribeObservers() {
-        model.bodies.observe(viewLifecycleOwner) { bodies ->
-            var bodiesNotNull =
-                bodies.filterNotNull().map { it.split(" ").take(2).joinToString(" ") }
-            adapter.update(bodiesNotNull)
+        model.authors.observe(viewLifecycleOwner) { authors ->
+            var authorsNotNull = authors.filterNotNull()
+            adapter.update(authorsNotNull)
         }
     }
 }
