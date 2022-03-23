@@ -15,5 +15,7 @@
     <color name="secondary_button">#F1F1F9</color>
     <color name="secondary_button_text">#5A5A89</color>
     <color name="auth_titles">#5A5A89</color>
+    <color name="auth_hint">#5A5A89</color>
     <color name="error_message">#FD5959</color>
+    <color name="auth_focused_edit_text_stroke">#262146</color>
 </resources>

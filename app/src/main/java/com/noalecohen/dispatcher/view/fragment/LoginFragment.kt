@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.noalecohen.dispatcher.R
@@ -34,7 +35,6 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
-
     private fun bindView() {
         emailEditText = binding.loginEmailEditText
         passwordEditText = binding.loginPasswordEditText
@@ -44,8 +44,20 @@ class LoginFragment : Fragment() {
 
     private fun setSignupButton() {
         binding.loginSigninButton.setOnClickListener {
-            var email = emailEditText.text.toString().trim { it <= ' ' }
-            var password = passwordEditText.text.toString().trim { it <= ' ' }
+            val email = emailEditText.text.toString().trim { it <= ' ' }
+            val password = passwordEditText.text.toString().trim { it <= ' ' }
+
+            if (email.isEmpty()) {
+                setErrorViewForEditText(emailEditText)
+            } else {
+                resetEditTextView(emailEditText)
+            }
+            if (password.isEmpty()) {
+                setErrorViewForEditText(passwordEditText)
+            } else {
+                resetEditTextView(passwordEditText)
+            }
+
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 model.login(email, password)
             }
@@ -68,9 +80,19 @@ class LoginFragment : Fragment() {
                 }
                 is ViewState.Error -> Toast.makeText(activity, it.error?.message, Toast.LENGTH_LONG)
                     .show()
-                is ViewState.Loading -> Log.d("Test", "Loading") //TODO: handle loading state
+                is ViewState.Loading -> Log.d("Test", "Loading") //TODO: Implement Loader
             }
         }
+    }
+
+    private fun setErrorViewForEditText(editText: EditText) {
+        editText.setBackgroundResource(R.drawable.error_edit_text_background)
+        editText.setHintTextColor(ResourcesCompat.getColor(resources, R.color.error_message, null))
+    }
+
+    private fun resetEditTextView(editText: EditText) {
+        editText.setBackgroundResource(R.drawable.edit_text_background)
+        editText.setHintTextColor(ResourcesCompat.getColor(resources, R.color.auth_hint, null))
     }
 
 }

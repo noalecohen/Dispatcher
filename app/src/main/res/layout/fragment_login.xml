@@ -27,31 +27,42 @@
         android:background="@drawable/edit_text_background"
         android:hint="@string/auth_email_hint"
         android:inputType="textEmailAddress"
-        android:textColorHint="@color/auth_titles"
+        android:textColor="@color/auth_titles"
+        android:textColorHint="@color/auth_hint"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/login_password_edit_text"
+        app:layout_constraintBottom_toTopOf="@id/login_password_layput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_title" />
 
-    <EditText
-        android:id="@+id/login_password_edit_text"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/login_password_layput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:background="@drawable/edit_text_background"
-        android:drawableEnd="@drawable/ic_invisible_password"
-        android:drawablePadding="20dp"
-        android:hint="@string/auth_password_hint"
-        android:inputType="textPassword"
-        android:paddingEnd="20dp"
-        android:textColorHint="@color/auth_titles"
-        android:textSize="16sp"
+        app:hintEnabled="false"
         app:layout_constraintBottom_toTopOf="@id/separator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_email_edit_text"
-        tools:ignore="RtlSymmetry" />
+        app:passwordToggleDrawable="@drawable/show_password_selector"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/auth_titles">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/login_password_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="@string/auth_password_hint"
+            android:inputType="textPassword"
+            android:textColor="@color/auth_titles"
+            android:textColorHint="@color/auth_hint"
+            android:textSize="16sp"
+            tools:ignore="RtlSymmetry" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <View
         android:id="@+id/separator"
@@ -62,7 +73,7 @@
         app:layout_constraintBottom_toTopOf="@id/login_signin_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_password_edit_text" />
+        app:layout_constraintTop_toBottomOf="@id/login_password_layput" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/login_signin_button"
@@ -70,6 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:backgroundTint="@color/primary_button"
+        android:stateListAnimator="@null"
         android:text="@string/auth_login_button_text"
         android:textColor="@color/white"
         app:icon="@drawable/ic_arrow_right"
@@ -85,6 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:backgroundTint="@color/secondary_button"
+        android:stateListAnimator="@null"
         android:text="@string/auth_signup_button_text"
         android:textColor="@color/secondary_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
