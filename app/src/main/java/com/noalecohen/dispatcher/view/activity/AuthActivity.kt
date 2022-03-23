@@ -1,9 +1,10 @@
-package com.noalecohen.dispatcher.view
+package com.noalecohen.dispatcher.view.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.databinding.ActivityAuthBinding
+import com.noalecohen.dispatcher.view.fragment.SplashFragment
 
 
 class AuthActivity : AppCompatActivity() {

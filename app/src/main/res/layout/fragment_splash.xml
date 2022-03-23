@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/splash_layout"
     android:background="@color/primary_color"
-    tools:context="com.noalecohen.dispatcher.view.SplashFragment">
+    tools:context="com.noalecohen.dispatcher.view.fragment.SplashFragment">
 
     <TextView
         android:id="@+id/splash_textView_title"

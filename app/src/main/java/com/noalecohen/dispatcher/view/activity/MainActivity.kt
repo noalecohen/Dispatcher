@@ -1,4 +1,4 @@
-package com.noalecohen.dispatcher.view
+package com.noalecohen.dispatcher.view.activity
 
 import android.os.Bundle
 import android.util.Log
@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.tabs.TabLayout
 import com.noalecohen.dispatcher.databinding.ActivityMainBinding
+import com.noalecohen.dispatcher.view.fragment.AccountFragment
+import com.noalecohen.dispatcher.view.fragment.FavoritesFragment
+import com.noalecohen.dispatcher.view.fragment.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -23,9 +26,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setBottomNavigation(savedInstanceState: Bundle?) {
-        var tabIndex = Companion.DEFAULT_TAB_INDEX
+        var tabIndex = DEFAULT_TAB_INDEX
         if (savedInstanceState != null) {
-            tabIndex = savedInstanceState.get(Companion.TAB_INDEX) as Int
+            tabIndex = savedInstanceState.get(TAB_INDEX) as Int
         }
         binding.homePageBottomNav.getTabAt(tabIndex)?.select()
 
@@ -40,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                     2 -> fragmentManager!!.beginTransaction()
                         .replace(binding.homePageFrameContent.id, FavoritesFragment()).commit()
                     else -> {
-                        Log.d(Companion.NOT_FOUND, "Tab not found")
+                        Log.d(NOT_FOUND, "Tab not found")
                     }
                 }
             }
@@ -53,7 +56,7 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         val index = binding.homePageBottomNav.selectedTabPosition
-        outState.putInt(Companion.TAB_INDEX, index)
+        outState.putInt(TAB_INDEX, index)
     }
 
     companion object {

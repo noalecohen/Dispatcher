@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/primary_color"
     android:id="@+id/auth_layout"
-    tools:context="com.noalecohen.dispatcher.view.AuthActivity">
+    tools:context="com.noalecohen.dispatcher.view.activity.AuthActivity">
 
     <ImageView
         android:id="@+id/auth_logo"

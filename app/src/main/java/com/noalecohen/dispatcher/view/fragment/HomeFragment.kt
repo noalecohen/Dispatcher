@@ -1,4 +1,4 @@
-package com.noalecohen.dispatcher.view
+package com.noalecohen.dispatcher.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
