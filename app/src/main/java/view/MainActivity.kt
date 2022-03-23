@@ -1,4 +1,4 @@
-package com.noalecohen.dispatcher
+package view
 
 import android.os.Bundle
 import android.util.Log
@@ -6,10 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.tabs.TabLayout
 import com.noalecohen.dispatcher.databinding.ActivityMainBinding
-
-const val TAB_INDEX = "index"
-const val DEFAULT_TAB_INDEX = 1
-const val NOT_FOUND = "Not Found"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -27,9 +23,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setBottomNavigation(savedInstanceState: Bundle?) {
-        var tabIndex = DEFAULT_TAB_INDEX
+        var tabIndex = Companion.DEFAULT_TAB_INDEX
         if (savedInstanceState != null) {
-            tabIndex = savedInstanceState.get(TAB_INDEX) as Int
+            tabIndex = savedInstanceState.get(Companion.TAB_INDEX) as Int
         }
         binding.homePageBottomNav.getTabAt(tabIndex)?.select()
 
@@ -44,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                     2 -> fragmentManager!!.beginTransaction()
                         .replace(binding.homePageFrameContent.id, FavoritesFragment()).commit()
                     else -> {
-                        Log.d(NOT_FOUND, "Tab not found")
+                        Log.d(Companion.NOT_FOUND, "Tab not found")
                     }
                 }
             }
@@ -57,6 +53,12 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         val index = binding.homePageBottomNav.selectedTabPosition
-        outState.putInt(TAB_INDEX, index)
+        outState.putInt(Companion.TAB_INDEX, index)
+    }
+
+    companion object {
+        const val DEFAULT_TAB_INDEX = 1
+        const val NOT_FOUND = "Not Found"
+        const val TAB_INDEX = "index"
     }
 }

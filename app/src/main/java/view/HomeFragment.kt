@@ -1,4 +1,4 @@
-package com.noalecohen.dispatcher
+package view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.databinding.FragmentHomeBinding
+import com.noalecohen.dispatcher.isValidInput
+import com.noalecohen.dispatcher.update
 import viewModel.HomeViewModel
 
 class HomeFragment : Fragment() {

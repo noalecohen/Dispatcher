@@ -5,20 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_color"
-    tools:context=".AuthActivity">
+    android:id="@+id/auth_layout"
+    tools:context="view.AuthActivity">
 
     <ImageView
         android:id="@+id/auth_logo"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginVertical="36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="36dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.5"
         app:layout_constraintBottom_toTopOf="@id/startup_frame_content"
-        app:srcCompat="@mipmap/ic_splash" />
+        app:srcCompat="@drawable/dispatcher_logo" />
 
     <FrameLayout
         android:id="@+id/startup_frame_content"

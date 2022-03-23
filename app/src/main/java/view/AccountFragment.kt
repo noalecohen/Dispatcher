@@ -1,4 +1,4 @@
-package com.noalecohen.dispatcher
+package view
 
 import android.os.Bundle
 import android.util.Log
@@ -10,9 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.noalecohen.dispatcher.R.layout
 import com.noalecohen.dispatcher.databinding.FragmentAccountBinding
+import com.noalecohen.dispatcher.isValidInput
+import com.noalecohen.dispatcher.update
 import viewModel.AccountViewModel
 
-const val NEW_INSTANCE_INDICATOR = "Instance Indicator"
 
 class AccountFragment : Fragment() {
     private val model: AccountViewModel by activityViewModels()
@@ -27,7 +28,7 @@ class AccountFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         Log.d(
             NEW_INSTANCE_INDICATOR,
             "New instance of AccountFragment created, with orientation: ${resources.configuration.orientation}"
@@ -58,5 +59,9 @@ class AccountFragment : Fragment() {
             val titlesNotNull = titles.filterNotNull()
             adapter.update(titlesNotNull)
         }
+    }
+
+    companion object {
+        const val NEW_INSTANCE_INDICATOR = "Instance Indicator"
     }
 }

@@ -1,8 +1,10 @@
-package com.noalecohen.dispatcher
+package view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.databinding.ActivityAuthBinding
+
 
 class AuthActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthBinding
@@ -19,5 +21,4 @@ class AuthActivity : AppCompatActivity() {
         fragmentManager.beginTransaction().replace(R.id.startup_frame_content, SplashFragment())
             .commit()
     }
-
 }
