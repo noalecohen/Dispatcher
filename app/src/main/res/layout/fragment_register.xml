@@ -15,25 +15,34 @@
         android:text="@string/register_title"
         android:textColor="@color/auth_titles"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@id/register_email_edit_text"
+        app:layout_constraintBottom_toTopOf="@id/register_email_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/register_email_edit_text"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/register_email_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:background="@drawable/edit_text_background"
-        android:hint="@string/auth_email_hint"
-        android:inputType="textEmailAddress"
-        android:textColor="@color/auth_titles"
-        android:textColorHint="@color/auth_hint"
-        android:textSize="16sp"
+        app:hintEnabled="false"
         app:layout_constraintBottom_toTopOf="@id/register_password_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/register_title" />
+        app:layout_constraintTop_toBottomOf="@id/register_title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/register_email_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="@string/auth_email_hint"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/auth_titles"
+            android:textColorHint="@color/auth_hint"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/register_password_layout"
@@ -44,7 +53,7 @@
         app:layout_constraintBottom_toTopOf="@id/register_verify_password_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/register_email_edit_text"
+        app:layout_constraintTop_toBottomOf="@id/register_email_layout"
         app:passwordToggleDrawable="@drawable/show_password_selector"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/auth_titles">

@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.databinding.FragmentRegisterBinding
 import com.noalecohen.dispatcher.view.activity.AuthActivity
@@ -21,9 +23,12 @@ class RegisterFragment : Fragment() {
     private val model: AuthViewModel by activityViewModels()
     private lateinit var binding: FragmentRegisterBinding
 
-    private lateinit var emailEditText: EditText
-    private lateinit var passwordEditText: EditText
-    private lateinit var verifyPasswordEditText: EditText
+    private lateinit var emailEditText: TextInputEditText
+    private lateinit var passwordEditText: TextInputEditText
+    private lateinit var verifyPasswordEditText: TextInputEditText
+    private lateinit var emailLayout: TextInputLayout
+    private lateinit var passwordLayout: TextInputLayout
+    private lateinit var verifyPasswordLayout: TextInputLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,8 +45,21 @@ class RegisterFragment : Fragment() {
         emailEditText = binding.registerEmailEditText
         passwordEditText = binding.registerPasswordEditText
         verifyPasswordEditText = binding.registerVerifyPasswordEditText
+        emailLayout = binding.registerEmailLayout
+        passwordLayout = binding.registerPasswordLayout
+        verifyPasswordLayout = binding.registerVerifyPasswordLayout
         setSignupButton()
         setSwitchToLoginButton()
+
+        emailEditText.addTextChangedListener {
+            resetEditTextView(emailEditText, emailLayout)
+        }
+        passwordEditText.addTextChangedListener {
+            resetEditTextView(passwordEditText, passwordLayout)
+        }
+        verifyPasswordEditText.addTextChangedListener {
+            resetEditTextView(verifyPasswordEditText, verifyPasswordLayout)
+        }
     }
 
     private fun setSignupButton() {
@@ -51,19 +69,39 @@ class RegisterFragment : Fragment() {
             val verifyPassword = verifyPasswordEditText.text.toString().trim { it <= ' ' }
 
             if (email.isEmpty()) {
-                setErrorViewForEditText(emailEditText)
+                setErrorViewForEditText(emailEditText, emailLayout, EMPTY_EMAIL_ERROR_MESSAGE)
             } else {
-                resetEditTextView(emailEditText)
+                resetEditTextView(emailEditText, emailLayout)
             }
             if (password.isEmpty()) {
-                setErrorViewForEditText(passwordEditText)
+                setErrorViewForEditText(
+                    passwordEditText,
+                    passwordLayout,
+                    EMPTY_PASSWORD_ERROR_MESSAGE
+                )
             } else {
-                resetEditTextView(passwordEditText)
+                resetEditTextView(passwordEditText, passwordLayout)
             }
             if (verifyPassword.isEmpty()) {
-                setErrorViewForEditText(verifyPasswordEditText)
+                setErrorViewForEditText(
+                    verifyPasswordEditText,
+                    verifyPasswordLayout,
+                    EMPTY_VERIFY_PASSWORD_ERROR_MESSAGE
+                )
             } else {
-                resetEditTextView(verifyPasswordEditText)
+                resetEditTextView(verifyPasswordEditText, verifyPasswordLayout)
+            }
+
+            if (password.isNotEmpty() && verifyPassword.isNotEmpty() && !password.equals(
+                    verifyPassword
+                )
+            ) {
+                setErrorViewForEditText(passwordEditText, passwordLayout, DIFFERENT_PASSWORDS)
+                setErrorViewForEditText(
+                    verifyPasswordEditText,
+                    verifyPasswordLayout,
+                    DIFFERENT_PASSWORDS
+                )
             }
 
             if (email.isNotEmpty() && password.isNotEmpty() && verifyPassword.isNotEmpty() && password.equals(
@@ -105,14 +143,46 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun setErrorViewForEditText(editText: EditText) {
+    private fun setErrorViewForEditText(
+        editText: TextInputEditText,
+        editTextLayout: TextInputLayout, errorMessage: String
+    ) {
         editText.setBackgroundResource(R.drawable.error_edit_text_background)
-        editText.setHintTextColor(ResourcesCompat.getColor(resources, R.color.error_message, null))
+        editText.setHintTextColor(
+            ResourcesCompat.getColor(
+                resources,
+                R.color.auth_hint,
+                null
+            )
+        )
+        editTextLayout.isErrorEnabled = true
+        editTextLayout.error = errorMessage
     }
 
-    private fun resetEditTextView(editText: EditText) {
+    private fun resetEditTextView(editText: TextInputEditText, editTextLayout: TextInputLayout) {
+        editText.setBackgroundColor(
+            ResourcesCompat.getColor(
+                resources,
+                R.color.white,
+                null
+            )
+        )
         editText.setBackgroundResource(R.drawable.edit_text_background)
-        editText.setHintTextColor(ResourcesCompat.getColor(resources, R.color.auth_hint, null))
+        editText.setHintTextColor(
+            ResourcesCompat.getColor(
+                resources,
+                R.color.auth_hint,
+                null
+            )
+        )
+        editTextLayout.isErrorEnabled = false
+    }
+
+    companion object {
+        const val EMPTY_EMAIL_ERROR_MESSAGE = "Please enter your email address"
+        const val EMPTY_PASSWORD_ERROR_MESSAGE = "Please enter your password"
+        const val EMPTY_VERIFY_PASSWORD_ERROR_MESSAGE = "Please enter your password again"
+        const val DIFFERENT_PASSWORDS = "Passwords are not the same"
     }
 
 }

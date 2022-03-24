@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.textfield.TextInputEditText
@@ -24,8 +24,9 @@ class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
 
     private lateinit var emailEditText: TextInputEditText
-    private lateinit var passwordEditText: EditText
+    private lateinit var passwordEditText: TextInputEditText
     private lateinit var emailLayout: TextInputLayout
+    private lateinit var passwordLayout: TextInputLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,8 +43,17 @@ class LoginFragment : Fragment() {
         emailEditText = binding.loginEmailEditText
         passwordEditText = binding.loginPasswordEditText
         emailLayout = binding.loginEmailLayout
+        passwordLayout = binding.loginPasswordLayout
         setSignupButton()
         setSwitchToRegisterButton()
+
+        emailEditText.addTextChangedListener {
+            resetEditTextView(emailEditText, emailLayout)
+        }
+        passwordEditText.addTextChangedListener {
+            resetEditTextView(passwordEditText, passwordLayout)
+        }
+
     }
 
     private fun setSignupButton() {
@@ -52,14 +62,14 @@ class LoginFragment : Fragment() {
             val password = passwordEditText.text.toString().trim { it <= ' ' }
 
             if (email.isEmpty()) {
-                setErrorViewForEditText(emailEditText)
-            } else {
-                resetEditTextView(emailEditText)
+                setErrorViewForEditText(emailEditText, emailLayout, EMPTY_EMAIL_ERROR_MESSAGE)
             }
             if (password.isEmpty()) {
-                setErrorViewForEditText(passwordEditText)
-            } else {
-                resetEditTextView(passwordEditText)
+                setErrorViewForEditText(
+                    passwordEditText,
+                    passwordLayout,
+                    EMPTY_PASSWORD_ERROR_MESSAGE
+                )
             }
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
@@ -97,13 +107,43 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun setErrorViewForEditText(editText: EditText) {
+    private fun setErrorViewForEditText(
+        editText: TextInputEditText,
+        editTextLayout: TextInputLayout, errorMessage: String
+    ) {
         editText.setBackgroundResource(R.drawable.error_edit_text_background)
-        editText.setHintTextColor(ResourcesCompat.getColor(resources, R.color.auth_hint, null))
+        editText.setHintTextColor(
+            ResourcesCompat.getColor(
+                resources,
+                R.color.auth_hint,
+                null
+            )
+        )
+        editTextLayout.isErrorEnabled = true
+        editTextLayout.error = errorMessage
     }
 
-    private fun resetEditTextView(editText: EditText) {
+    private fun resetEditTextView(editText: TextInputEditText, editTextLayout: TextInputLayout) {
+        editText.setBackgroundColor(
+            ResourcesCompat.getColor(
+                resources,
+                R.color.white,
+                null
+            )
+        )
         editText.setBackgroundResource(R.drawable.edit_text_background)
-        editText.setHintTextColor(ResourcesCompat.getColor(resources, R.color.auth_hint, null))
+        editText.setHintTextColor(
+            ResourcesCompat.getColor(
+                resources,
+                R.color.auth_hint,
+                null
+            )
+        )
+        editTextLayout.isErrorEnabled = false
+    }
+
+    companion object {
+        const val EMPTY_EMAIL_ERROR_MESSAGE = "Please enter your email address"
+        const val EMPTY_PASSWORD_ERROR_MESSAGE = "Please enter your password"
     }
 }
