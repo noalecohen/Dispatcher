@@ -2,7 +2,6 @@ package com.noalecohen.dispatcher.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +10,11 @@ import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.databinding.FragmentLoginBinding
+import com.noalecohen.dispatcher.view.activity.AuthActivity
 import com.noalecohen.dispatcher.view.activity.MainActivity
 import com.noalecohen.dispatcher.viewmodel.AuthViewModel
 import com.noalecohen.dispatcher.viewstate.ViewState
@@ -21,8 +23,9 @@ class LoginFragment : Fragment() {
     private val model: AuthViewModel by activityViewModels()
     private lateinit var binding: FragmentLoginBinding
 
-    private lateinit var emailEditText: EditText
+    private lateinit var emailEditText: TextInputEditText
     private lateinit var passwordEditText: EditText
+    private lateinit var emailLayout: TextInputLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +41,7 @@ class LoginFragment : Fragment() {
     private fun bindView() {
         emailEditText = binding.loginEmailEditText
         passwordEditText = binding.loginPasswordEditText
+        emailLayout = binding.loginEmailLayout
         setSignupButton()
         setSwitchToRegisterButton()
     }
@@ -75,24 +79,29 @@ class LoginFragment : Fragment() {
         model.viewStateLiveDataLogin.observe(viewLifecycleOwner) {
             when (it) {
                 is ViewState.Success -> activity?.let { fragmentActivity ->
-                    val intent = Intent(fragmentActivity, MainActivity::class.java)
-                    fragmentActivity.startActivity(intent)
+                    {
+                        (activity as AuthActivity).hideProgressBar()
+                        val intent = Intent(fragmentActivity, MainActivity::class.java)
+                        fragmentActivity.startActivity(intent)
+                    }
                 }
-                is ViewState.Error -> Toast.makeText(activity, it.error?.message, Toast.LENGTH_LONG)
-                    .show()
-                is ViewState.Loading -> Log.d("Test", "Loading") //TODO: Implement Loader
+                is ViewState.Error -> {
+                    (activity as AuthActivity).hideProgressBar()
+                    Toast.makeText(activity, it.error?.message, Toast.LENGTH_LONG)
+                        .show()
+                }
+                is ViewState.Loading -> (activity as AuthActivity).showProgressBar()
             }
         }
     }
 
     private fun setErrorViewForEditText(editText: EditText) {
         editText.setBackgroundResource(R.drawable.error_edit_text_background)
-        editText.setHintTextColor(ResourcesCompat.getColor(resources, R.color.error_message, null))
+        editText.setHintTextColor(ResourcesCompat.getColor(resources, R.color.auth_hint, null))
     }
 
     private fun resetEditTextView(editText: EditText) {
         editText.setBackgroundResource(R.drawable.edit_text_background)
         editText.setHintTextColor(ResourcesCompat.getColor(resources, R.color.auth_hint, null))
     }
-
 }

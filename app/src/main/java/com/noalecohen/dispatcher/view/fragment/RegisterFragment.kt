@@ -2,7 +2,6 @@ package com.noalecohen.dispatcher.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.databinding.FragmentRegisterBinding
+import com.noalecohen.dispatcher.view.activity.AuthActivity
 import com.noalecohen.dispatcher.view.activity.MainActivity
 import com.noalecohen.dispatcher.viewmodel.AuthViewModel
 import com.noalecohen.dispatcher.viewstate.ViewState
@@ -86,14 +86,19 @@ class RegisterFragment : Fragment() {
     private fun subscribeObservers() {
         model.viewStateLiveDataRegister.observe(viewLifecycleOwner) {
             when (it) {
-                is ViewState.Success ->
+                is ViewState.Success -> {
+                    (activity as AuthActivity).hideProgressBar()
                     activity?.let { fragmentActivity ->
                         val intent = Intent(fragmentActivity, MainActivity::class.java)
                         fragmentActivity.startActivity(intent)
                     }
-                is ViewState.Error -> Toast.makeText(activity, it.error?.message, Toast.LENGTH_LONG)
-                    .show()
-                is ViewState.Loading -> Log.d("Test", "Loading") //TODO: Implement Loader
+                }
+                is ViewState.Error -> {
+                    (activity as AuthActivity).hideProgressBar()
+                    Toast.makeText(activity, it.error?.message, Toast.LENGTH_LONG)
+                        .show()
+                }
+                is ViewState.Loading -> (activity as AuthActivity).showProgressBar()
             }
         }
     }

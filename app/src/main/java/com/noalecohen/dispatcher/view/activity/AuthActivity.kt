@@ -1,6 +1,7 @@
 package com.noalecohen.dispatcher.view.activity
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.databinding.ActivityAuthBinding
@@ -21,5 +22,13 @@ class AuthActivity : AppCompatActivity() {
         val fragmentManager = supportFragmentManager
         fragmentManager.beginTransaction().replace(R.id.startup_frame_content, SplashFragment())
             .commit()
+    }
+
+    fun showProgressBar() {
+        binding.authProgressBar.visibility = View.VISIBLE
+    }
+
+    fun hideProgressBar() {
+        binding.authProgressBar.visibility = View.GONE
     }
 }
