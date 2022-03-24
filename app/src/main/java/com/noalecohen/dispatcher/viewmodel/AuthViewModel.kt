@@ -9,35 +9,40 @@ import com.noalecohen.dispatcher.viewstate.ViewState
 class AuthViewModel : ViewModel() {
     private val appRepository = AppRepository()
 
-    val viewStateLiveData: MutableLiveData<ViewState> = MutableLiveData(ViewState.Idle)
+    val viewStateLiveDataRegister: MutableLiveData<ViewState> = MutableLiveData(ViewState.Idle)
+    val viewStateLiveDataLogin: MutableLiveData<ViewState> = MutableLiveData(ViewState.Idle)
 
     fun register(email: String, password: String) {
-        viewStateLiveData.postValue(ViewState.Loading)
+        viewStateLiveDataRegister.postValue(ViewState.Loading)
         appRepository.register(email, password) { it ->
             if (it.isSuccessful) {
                 it.result.user?.let {
-                    viewStateLiveData.postValue(ViewState.Success(it))
+                    viewStateLiveDataRegister.postValue(ViewState.Success(it))
                 }
             } else {
-                viewStateLiveData.postValue(ViewState.Error(it.exception))
+                viewStateLiveDataRegister.postValue(ViewState.Error(it.exception))
             }
         }
     }
 
     fun login(email: String, password: String) {
-        viewStateLiveData.postValue(ViewState.Loading)
+        viewStateLiveDataLogin.postValue(ViewState.Loading)
         appRepository.login(email, password) { it ->
             if (it.isSuccessful) {
                 it.result.user?.let {
-                    viewStateLiveData.postValue(ViewState.Success(it))
+                    viewStateLiveDataLogin.postValue(ViewState.Success(it))
                 }
             } else {
-                viewStateLiveData.postValue(ViewState.Error(it.exception))
+                viewStateLiveDataLogin.postValue(ViewState.Error(it.exception))
             }
         }
     }
 
     fun getCurrentUser(): FirebaseUser? {
         return appRepository.getCurrentUser()
+    }
+
+    fun signOut() {
+        appRepository.signOut()
     }
 }

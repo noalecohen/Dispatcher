@@ -1,5 +1,6 @@
 package com.noalecohen.dispatcher.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +12,13 @@ import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.databinding.FragmentHomeBinding
 import com.noalecohen.dispatcher.isValidInput
 import com.noalecohen.dispatcher.update
+import com.noalecohen.dispatcher.view.activity.AuthActivity
+import com.noalecohen.dispatcher.viewmodel.AuthViewModel
 import com.noalecohen.dispatcher.viewmodel.HomeViewModel
 
 class HomeFragment : Fragment() {
     private val model: HomeViewModel by activityViewModels()
+    private val authModel: AuthViewModel by activityViewModels()
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: ArrayAdapter<String>
 
@@ -36,6 +40,7 @@ class HomeFragment : Fragment() {
         binding.homeListView.adapter = adapter
         subscribeObservers()
         setSaveButton()
+        setSignoutButton()
     }
 
     private fun setSaveButton() {
@@ -53,6 +58,14 @@ class HomeFragment : Fragment() {
             var bodiesNotNull =
                 bodies.filterNotNull().map { it.split(" ").take(2).joinToString(" ") }
             adapter.update(bodiesNotNull)
+        }
+    }
+
+    private fun setSignoutButton() {
+        binding.homeSignOutButton.setOnClickListener {
+            authModel.signOut()
+            var intent = Intent(activity, AuthActivity::class.java)
+            startActivity(intent)
         }
     }
 }

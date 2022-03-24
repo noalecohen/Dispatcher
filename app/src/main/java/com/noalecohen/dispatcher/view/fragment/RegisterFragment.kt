@@ -84,7 +84,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun subscribeObservers() {
-        model.viewStateLiveData.observe(viewLifecycleOwner) {
+        model.viewStateLiveDataRegister.observe(viewLifecycleOwner) {
             when (it) {
                 is ViewState.Success ->
                     activity?.let { fragmentActivity ->

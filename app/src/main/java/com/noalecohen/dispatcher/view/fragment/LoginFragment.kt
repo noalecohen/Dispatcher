@@ -72,7 +72,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun subscribeObservers() {
-        model.viewStateLiveData.observe(viewLifecycleOwner) {
+        model.viewStateLiveDataLogin.observe(viewLifecycleOwner) {
             when (it) {
                 is ViewState.Success -> activity?.let { fragmentActivity ->
                     val intent = Intent(fragmentActivity, MainActivity::class.java)
