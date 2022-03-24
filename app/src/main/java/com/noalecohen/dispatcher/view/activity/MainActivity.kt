@@ -1,4 +1,4 @@
-package com.noalecohen.dispatcher
+package com.noalecohen.dispatcher.view.activity
 
 import android.os.Bundle
 import android.util.Log
@@ -6,10 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.tabs.TabLayout
 import com.noalecohen.dispatcher.databinding.ActivityMainBinding
-
-const val TAB_INDEX = "index"
-const val DEFAULT_TAB_INDEX = 1
-const val NOT_FOUND = "Not Found"
+import com.noalecohen.dispatcher.view.fragment.AccountFragment
+import com.noalecohen.dispatcher.view.fragment.FavoritesFragment
+import com.noalecohen.dispatcher.view.fragment.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -58,5 +57,11 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         val index = binding.homePageBottomNav.selectedTabPosition
         outState.putInt(TAB_INDEX, index)
+    }
+
+    companion object {
+        const val DEFAULT_TAB_INDEX = 1
+        const val NOT_FOUND = "Not Found"
+        const val TAB_INDEX = "index"
     }
 }

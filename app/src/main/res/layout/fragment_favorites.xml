@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FavoritesFragment">
+    tools:context="com.noalecohen.dispatcher.view.fragment.FavoritesFragment">
 
     <EditText
         android:id="@+id/favorites_edit_text"

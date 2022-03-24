@@ -13,4 +13,12 @@
     <string name="save_btn">SAVE</string>
     <string name="add_favorite_hint">Add Favorite</string>
     <string name="add_body_hint">Add Body</string>
+    <string name="register_title">Signup</string>
+    <string name="auth_email_hint">Your email</string>
+    <string name="auth_password_hint">Password</string>
+    <string name="auth_verify_password_hint">Re-Enter Password</string>
+    <string name="auth_signup_button_text">SIGNUP</string>
+    <string name="auth_login_button_text">LOGIN</string>
+    <string name="login_title">Login</string>
+    <string name="logout_button_text">Logout</string>
 </resources>
