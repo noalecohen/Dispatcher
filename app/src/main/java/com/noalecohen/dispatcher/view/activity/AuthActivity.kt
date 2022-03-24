@@ -13,8 +13,8 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_auth)
         binding = ActivityAuthBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     override fun onStart() {
