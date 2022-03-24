@@ -80,12 +80,14 @@ class LoginFragment : Fragment() {
             when (it) {
                 is ViewState.Success -> activity?.let { fragmentActivity ->
                     {
+                        model.viewStateLiveDataLogin.postValue(ViewState.Idle)
                         (activity as AuthActivity).hideProgressBar()
                         val intent = Intent(fragmentActivity, MainActivity::class.java)
                         fragmentActivity.startActivity(intent)
                     }
                 }
                 is ViewState.Error -> {
+                    model.viewStateLiveDataLogin.postValue(ViewState.Idle)
                     (activity as AuthActivity).hideProgressBar()
                     Toast.makeText(activity, it.error?.message, Toast.LENGTH_LONG)
                         .show()

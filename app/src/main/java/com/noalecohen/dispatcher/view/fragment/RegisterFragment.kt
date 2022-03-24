@@ -87,6 +87,7 @@ class RegisterFragment : Fragment() {
         model.viewStateLiveDataRegister.observe(viewLifecycleOwner) {
             when (it) {
                 is ViewState.Success -> {
+                    model.viewStateLiveDataRegister.postValue(ViewState.Idle)
                     (activity as AuthActivity).hideProgressBar()
                     activity?.let { fragmentActivity ->
                         val intent = Intent(fragmentActivity, MainActivity::class.java)
@@ -94,6 +95,7 @@ class RegisterFragment : Fragment() {
                     }
                 }
                 is ViewState.Error -> {
+                    model.viewStateLiveDataRegister.postValue(ViewState.Idle)
                     (activity as AuthActivity).hideProgressBar()
                     Toast.makeText(activity, it.error?.message, Toast.LENGTH_LONG)
                         .show()
