@@ -69,7 +69,11 @@ class RegisterFragment : Fragment() {
             val verifyPassword = verifyPasswordEditText.text.toString().trim { it <= ' ' }
 
             if (email.isEmpty()) {
-                setErrorViewForEditText(emailEditText, emailLayout, EMPTY_EMAIL_ERROR_MESSAGE)
+                setErrorViewForEditText(
+                    emailEditText,
+                    emailLayout,
+                    getString(R.string.empty_email_error_message)
+                )
             } else {
                 resetEditTextView(emailEditText, emailLayout)
             }
@@ -77,7 +81,7 @@ class RegisterFragment : Fragment() {
                 setErrorViewForEditText(
                     passwordEditText,
                     passwordLayout,
-                    EMPTY_PASSWORD_ERROR_MESSAGE
+                    getString(R.string.empty_password_error_message)
                 )
             } else {
                 resetEditTextView(passwordEditText, passwordLayout)
@@ -86,7 +90,7 @@ class RegisterFragment : Fragment() {
                 setErrorViewForEditText(
                     verifyPasswordEditText,
                     verifyPasswordLayout,
-                    EMPTY_VERIFY_PASSWORD_ERROR_MESSAGE
+                    getString(R.string.empty_verify_password_error_message)
                 )
             } else {
                 resetEditTextView(verifyPasswordEditText, verifyPasswordLayout)
@@ -96,11 +100,15 @@ class RegisterFragment : Fragment() {
                     verifyPassword
                 )
             ) {
-                setErrorViewForEditText(passwordEditText, passwordLayout, DIFFERENT_PASSWORDS)
+                setErrorViewForEditText(
+                    passwordEditText,
+                    passwordLayout,
+                    getString(R.string.different_passwords)
+                )
                 setErrorViewForEditText(
                     verifyPasswordEditText,
                     verifyPasswordLayout,
-                    DIFFERENT_PASSWORDS
+                    getString(R.string.different_passwords)
                 )
             }
 
@@ -126,7 +134,7 @@ class RegisterFragment : Fragment() {
             when (it) {
                 is ViewState.Success -> {
                     model.viewStateLiveDataRegister.postValue(ViewState.Idle)
-                    (activity as AuthActivity).hideProgressBar()
+                    (activity as AuthActivity).showLoader(false)
                     activity?.let { fragmentActivity ->
                         val intent = Intent(fragmentActivity, MainActivity::class.java)
                         fragmentActivity.startActivity(intent)
@@ -134,11 +142,11 @@ class RegisterFragment : Fragment() {
                 }
                 is ViewState.Error -> {
                     model.viewStateLiveDataRegister.postValue(ViewState.Idle)
-                    (activity as AuthActivity).hideProgressBar()
+                    (activity as AuthActivity).showLoader(false)
                     Toast.makeText(activity, it.error?.message, Toast.LENGTH_LONG)
                         .show()
                 }
-                is ViewState.Loading -> (activity as AuthActivity).showProgressBar()
+                is ViewState.Loading -> (activity as AuthActivity).showLoader(true)
             }
         }
     }
@@ -176,13 +184,6 @@ class RegisterFragment : Fragment() {
             )
         )
         editTextLayout.isErrorEnabled = false
-    }
-
-    companion object {
-        const val EMPTY_EMAIL_ERROR_MESSAGE = "Please enter your email address"
-        const val EMPTY_PASSWORD_ERROR_MESSAGE = "Please enter your password"
-        const val EMPTY_VERIFY_PASSWORD_ERROR_MESSAGE = "Please enter your password again"
-        const val DIFFERENT_PASSWORDS = "Passwords are not the same"
     }
 
 }

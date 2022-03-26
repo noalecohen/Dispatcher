@@ -62,13 +62,17 @@ class LoginFragment : Fragment() {
             val password = passwordEditText.text.toString().trim { it <= ' ' }
 
             if (email.isEmpty()) {
-                setErrorViewForEditText(emailEditText, emailLayout, EMPTY_EMAIL_ERROR_MESSAGE)
+                setErrorViewForEditText(
+                    emailEditText,
+                    emailLayout,
+                    getString(R.string.empty_email_error_message)
+                )
             }
             if (password.isEmpty()) {
                 setErrorViewForEditText(
                     passwordEditText,
                     passwordLayout,
-                    EMPTY_PASSWORD_ERROR_MESSAGE
+                    getString(R.string.empty_password_error_message)
                 )
             }
 
@@ -91,18 +95,18 @@ class LoginFragment : Fragment() {
                 is ViewState.Success -> activity?.let { fragmentActivity ->
                     {
                         model.viewStateLiveDataLogin.postValue(ViewState.Idle)
-                        (activity as AuthActivity).hideProgressBar()
+                        (activity as AuthActivity).showLoader(false)
                         val intent = Intent(fragmentActivity, MainActivity::class.java)
                         fragmentActivity.startActivity(intent)
                     }
                 }
                 is ViewState.Error -> {
                     model.viewStateLiveDataLogin.postValue(ViewState.Idle)
-                    (activity as AuthActivity).hideProgressBar()
+                    (activity as AuthActivity).showLoader(false)
                     Toast.makeText(activity, it.error?.message, Toast.LENGTH_LONG)
                         .show()
                 }
-                is ViewState.Loading -> (activity as AuthActivity).showProgressBar()
+                is ViewState.Loading -> (activity as AuthActivity).showLoader(true)
             }
         }
     }
@@ -141,9 +145,5 @@ class LoginFragment : Fragment() {
         )
         editTextLayout.isErrorEnabled = false
     }
-
-    companion object {
-        const val EMPTY_EMAIL_ERROR_MESSAGE = "Please enter your email address"
-        const val EMPTY_PASSWORD_ERROR_MESSAGE = "Please enter your password"
-    }
+    
 }

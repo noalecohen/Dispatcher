@@ -24,11 +24,11 @@ class AuthActivity : AppCompatActivity() {
             .commit()
     }
 
-    fun showProgressBar() {
-        binding.authProgressBar.visibility = View.VISIBLE
-    }
-
-    fun hideProgressBar() {
-        binding.authProgressBar.visibility = View.GONE
+    fun showLoader(toShow: Boolean) {
+        if (toShow) {
+            binding.authProgressBar.visibility = View.VISIBLE
+        } else {
+            binding.authProgressBar.visibility = View.GONE
+        }
     }
 }
