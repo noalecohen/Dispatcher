@@ -21,4 +21,8 @@
     <string name="auth_login_button_text">LOGIN</string>
     <string name="login_title">Login</string>
     <string name="logout_button_text">Logout</string>
+    <string name="empty_email_error_message">Please enter your email address</string>
+    <string name="empty_password_error_message">Please enter your password</string>
+    <string name="empty_verify_password_error_message">Please enter your password again</string>
+    <string name="different_passwords">Passwords are not the same</string>
 </resources>
