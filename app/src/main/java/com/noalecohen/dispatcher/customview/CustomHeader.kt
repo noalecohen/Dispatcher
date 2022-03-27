@@ -12,17 +12,33 @@ import com.noalecohen.dispatcher.databinding.CustomHeaderBinding
 
 class CustomHeader(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
 
-    var binding: CustomHeaderBinding
-    var firstIcon: ImageView
-    var secondIcon: ImageButton
-    var thirdIcon: ImageButton
     var view: View = inflate(context, R.layout.custom_header, this)
+
+    var binding: CustomHeaderBinding
+
+    var icon: ImageView
+    var leftImageButton: ImageButton
+    var rightImageButton: ImageButton
+
 
     init {
         binding = CustomHeaderBinding.bind(view)
-        firstIcon = binding.headerFirstIcon
-        secondIcon = binding.headerSecondIcon
-        thirdIcon = binding.headerThirdIcon
+        icon = binding.headerIcon
+        leftImageButton = binding.headerLeftImageButton
+        rightImageButton = binding.headerRightImageButton
+
+        context.theme.obtainStyledAttributes(attrs, R.styleable.CustomHeader, 0, 0)
+            .apply {
+                try {
+                    icon.setImageDrawable(getDrawable(R.styleable.CustomHeader_firstIcon))
+                    leftImageButton.background = getDrawable(R.styleable.CustomHeader_secondIcon)
+                    rightImageButton.background = getDrawable(R.styleable.CustomHeader_thirdIcon)
+                } catch (e: Exception) {
+                    //TODO: handle exception
+                } finally {
+                    recycle()
+                }
+            }
     }
 
     fun isShowIcon(icon: ImageButton): Boolean {
@@ -30,14 +46,12 @@ class CustomHeader(context: Context, attrs: AttributeSet?) : ConstraintLayout(co
     }
 
     fun setShowIcon(icon: View, toShow: Boolean) {
-        icon.visibility = if(toShow) View.VISIBLE else View.GONE
+        icon.visibility = if (toShow) View.VISIBLE else View.GONE
+        invalidate()
+        requestLayout()
     }
 
     fun setIconClickListener(icon: ImageButton, callBack: OnClickListener) {
         icon.setOnClickListener(callBack)
-    }
-
-    fun setIconDrawable(icon: ImageButton, drawableId: Int) {
-        icon.setBackgroundResource(drawableId)
     }
 }
