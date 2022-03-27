@@ -2,14 +2,46 @@ package com.noalecohen.dispatcher.customview
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.LayoutInflater
+import android.view.View
+import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import com.noalecohen.dispatcher.R
+import com.noalecohen.dispatcher.databinding.CustomHeaderBinding
 
 class CustomHeader(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
 
+    var binding: CustomHeaderBinding
+    var firstIcon: ImageView
+    var secondIcon: ImageButton
+    var thirdIcon: ImageButton
+    var view: View = inflate(context, R.layout.custom_header, this)
+
     init {
-        val view = LayoutInflater.from(context).inflate(R.layout.custom_header, this, false)
-        addView(view)
+        binding = CustomHeaderBinding.bind(view)
+        firstIcon = binding.headerFirstIcon
+        secondIcon = binding.headerSecondIcon
+        thirdIcon = binding.headerThirdIcon
+    }
+
+    fun isShowIcon(icon: ImageButton): Boolean {
+        return icon.isVisible
+    }
+
+    fun setShowIcon(icon: View, toShow: Boolean) {
+        if (toShow) {
+            icon.visibility = View.VISIBLE
+        } else {
+            icon.visibility = View.GONE
+        }
+    }
+
+    fun setIconClickListener(icon: ImageButton, callBack: OnClickListener) {
+        icon.setOnClickListener(callBack)
+    }
+
+    fun setIconDrawable(icon: ImageButton, drawableId: Int) {
+        icon.setBackgroundResource(drawableId)
     }
 }
