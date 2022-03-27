@@ -30,11 +30,7 @@ class CustomHeader(context: Context, attrs: AttributeSet?) : ConstraintLayout(co
     }
 
     fun setShowIcon(icon: View, toShow: Boolean) {
-        if (toShow) {
-            icon.visibility = View.VISIBLE
-        } else {
-            icon.visibility = View.GONE
-        }
+        if (toShow) icon.visibility = View.VISIBLE else icon.visibility = View.GONE
     }
 
     fun setIconClickListener(icon: ImageButton, callBack: OnClickListener) {
