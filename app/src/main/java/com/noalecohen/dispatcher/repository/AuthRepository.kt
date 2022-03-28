@@ -1,11 +1,11 @@
-package com.noalecohen.dispatcher.model
+package com.noalecohen.dispatcher.repository
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-class AppRepository {
+class AuthRepository {
 
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 

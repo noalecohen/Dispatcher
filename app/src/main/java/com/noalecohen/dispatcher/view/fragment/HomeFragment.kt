@@ -10,14 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.databinding.FragmentHomeBinding
-import com.noalecohen.dispatcher.isValidInput
 import com.noalecohen.dispatcher.update
 import com.noalecohen.dispatcher.view.activity.AuthActivity
+import com.noalecohen.dispatcher.viewmodel.ArticlesViewModel
 import com.noalecohen.dispatcher.viewmodel.AuthViewModel
-import com.noalecohen.dispatcher.viewmodel.HomeViewModel
 
 class HomeFragment : Fragment() {
-    private val model: HomeViewModel by activityViewModels()
+    private val articlesModel: ArticlesViewModel by activityViewModels()
     private val authModel: AuthViewModel by activityViewModels()
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: ArrayAdapter<String>
@@ -39,25 +38,14 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.homeListView.adapter = adapter
         subscribeObservers()
-        setSaveButton()
         setSignoutButton()
-    }
-
-    private fun setSaveButton() {
-        binding.homeSaveButton.setOnClickListener {
-            val body = binding.homeEditText.text.toString()
-            if (binding.homeEditText.isValidInput()) {
-                model.addBody(body)
-            }
-            binding.homeEditText.text.clear()
-        }
+        articlesModel.fetchArticles()
     }
 
     private fun subscribeObservers() {
-        model.bodies.observe(viewLifecycleOwner) { bodies ->
-            var bodiesNotNull =
-                bodies.filterNotNull().map { it.split(" ").take(2).joinToString(" ") }
-            adapter.update(bodiesNotNull)
+        articlesModel.articlesLiveData.observe(viewLifecycleOwner) { articles ->
+            var bodies = articles.mapNotNull { it.body }
+            adapter.update(bodies)
         }
     }
 
