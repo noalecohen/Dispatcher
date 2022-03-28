@@ -39,13 +39,12 @@ class HomeFragment : Fragment() {
         binding.homeListView.adapter = adapter
         subscribeObservers()
         setSignoutButton()
-        articlesModel.fetchArticles()
+        setSaveButton()
     }
 
     private fun subscribeObservers() {
         articlesModel.articlesLiveData.observe(viewLifecycleOwner) { articles ->
-            var bodies = articles.mapNotNull { it.body }
-            adapter.update(bodies)
+            adapter.update(articles.mapNotNull { it.title })
         }
     }
 
@@ -54,6 +53,13 @@ class HomeFragment : Fragment() {
             authModel.signOut()
             var intent = Intent(activity, AuthActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun setSaveButton() {
+        binding.homeSaveButton.setOnClickListener {
+            val country = binding.homeEditText.text.toString()
+            articlesModel.fetchTopHeadlinesByCountry(country)
         }
     }
 }

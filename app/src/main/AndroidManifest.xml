@@ -11,6 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".DispatcherApplication"
         android:theme="@style/Theme.Dispatcher">
         <activity
             android:name="com.noalecohen.dispatcher.view.activity.AuthActivity"

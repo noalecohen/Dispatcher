@@ -1,16 +1,14 @@
 package com.noalecohen.dispatcher.repository
 
-import com.noalecohen.dispatcher.model.Article
+import com.noalecohen.dispatcher.api.news.NewsServiceApiController
+import com.noalecohen.dispatcher.model.response.News
+import retrofit2.Call
 
 class ArticlesRepository {
+    private val apiController = NewsServiceApiController()
 
-    //fake data
-    fun fetchArticles(): List<Article> {
-        return mutableListOf(
-            Article("title 1", null, "author 1", "body 1"),
-            Article("title 2", null, "author 2", "body 2"),
-            Article("title 3", null, "author 3", "body 3")
-        )
+    fun fetchTopHeadlinesByCountry(country: String): Call<News> {
+        return apiController.fetchTopHeadlinesByCountry(country)
     }
 
 }
