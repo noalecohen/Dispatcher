@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomHeader">
+        <attr name="firstIcon" format="integer" />
+        <attr name="secondIcon" format="integer" />
+        <attr name="thirdIcon" format="integer" />
+    </declare-styleable>
+</resources>
