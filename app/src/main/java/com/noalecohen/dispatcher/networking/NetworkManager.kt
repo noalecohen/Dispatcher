@@ -1,5 +1,6 @@
 package com.noalecohen.dispatcher.networking
 
+import com.noalecohen.dispatcher.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -7,22 +8,26 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 object NetworkManager {
-    var retrofit: Retrofit? = null
-        private set
 
-    fun initRetrofit(baseUrl: String) {
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
-        val client: OkHttpClient = OkHttpClient
+    lateinit var client: OkHttpClient
+
+    val retrofit: Retrofit by lazy {
+        Retrofit
             .Builder()
-            .addInterceptor(interceptor)
-            .build()
-
-        retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
     }
 
+    init {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
+        client = OkHttpClient
+            .Builder()
+            .addInterceptor(interceptor)
+            .build()
+    }
+
 }
+
