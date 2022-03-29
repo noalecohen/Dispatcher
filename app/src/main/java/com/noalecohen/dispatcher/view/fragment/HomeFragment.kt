@@ -6,14 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.databinding.FragmentHomeBinding
 import com.noalecohen.dispatcher.update
 import com.noalecohen.dispatcher.view.activity.AuthActivity
+import com.noalecohen.dispatcher.view.activity.MainActivity
 import com.noalecohen.dispatcher.viewmodel.ArticlesViewModel
 import com.noalecohen.dispatcher.viewmodel.AuthViewModel
+import com.noalecohen.dispatcher.viewstate.RequestState
 
 class HomeFragment : Fragment() {
     private val articlesModel: ArticlesViewModel by activityViewModels()
@@ -46,6 +49,28 @@ class HomeFragment : Fragment() {
         articlesModel.articlesLiveData.observe(viewLifecycleOwner) { articles ->
             adapter.update(articles.mapNotNull { it.title })
         }
+
+        articlesModel.requestStateLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is RequestState.Success -> {
+                    articlesModel.requestStateLiveData.postValue(RequestState.Idle)
+                    (activity as MainActivity).showLoader(false)
+                    if (adapter.isEmpty) {
+                        Toast.makeText(context, R.string.empty_response, Toast.LENGTH_LONG).show()
+                    }
+                }
+                is RequestState.Error -> {
+                    articlesModel.requestStateLiveData.postValue(RequestState.Idle)
+                    (activity as MainActivity).showLoader(false)
+                    adapter.clear()
+                    Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
+                }
+                is RequestState.Loading -> {
+                    (activity as MainActivity).showLoader(true)
+                }
+
+            }
+        }
     }
 
     private fun setSignoutButton() {
@@ -58,6 +83,7 @@ class HomeFragment : Fragment() {
 
     private fun setSaveButton() {
         binding.homeSaveButton.setOnClickListener {
+            articlesModel.requestStateLiveData.postValue(RequestState.Loading)
             val country = binding.homeEditText.text.toString()
             articlesModel.fetchTopHeadlinesByCountry(country)
         }
