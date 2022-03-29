@@ -6,7 +6,7 @@
     android:background="@color/primary_color">
 
     <ImageView
-        android:id="@+id/header_icon"
+        android:id="@+id/custom_header_app_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="16.5dp"
@@ -16,26 +16,26 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/header_left_image_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="22dp"
-        android:layout_marginStart="322dp"
-        android:layout_marginEnd="14dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/header_right_image_button"
-        app:layout_constraintStart_toStartOf="@id/header_icon"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/header_right_image_button"
+        android:id="@+id/custom_header_icon1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="22dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/header_left_image_button"
+        app:layout_constraintStart_toEndOf="@id/custom_header_icon2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/custom_header_icon2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="22dp"
+        android:layout_marginStart="322dp"
+        android:layout_marginEnd="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/custom_header_icon1"
+        app:layout_constraintStart_toStartOf="@id/custom_header_app_logo"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
