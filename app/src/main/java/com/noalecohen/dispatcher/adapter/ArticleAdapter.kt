@@ -1,8 +1,10 @@
 package com.noalecohen.dispatcher.adapter
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +12,9 @@ import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.databinding.AdapterArticleItemBinding
 import com.noalecohen.dispatcher.model.response.Article
 import com.squareup.picasso.Picasso
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class ArticleAdapter(private val onItemClick: (position: Int) -> Unit) :
     ListAdapter<Article, ArticleAdapter.ArticleViewHolder>(DiffCallback()) {
@@ -34,8 +39,10 @@ class ArticleAdapter(private val onItemClick: (position: Int) -> Unit) :
             itemView.setOnClickListener(this)
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(article: Article) {
-            binding.adapterArticleItemDate.text = article.publishedAt
+            binding.adapterArticleItemDate.text = OffsetDateTime.parse(article.publishedAt)
+                .format(DateTimeFormatter.ofPattern(DATE_PATTERN, Locale.ENGLISH))
             binding.adapterArticleItemTitle.text = article.title
             binding.adapterArticleItemAuthor.text = article.author
             binding.adapterArticleItemAbstract.text = article.description
@@ -53,11 +60,16 @@ class ArticleAdapter(private val onItemClick: (position: Int) -> Unit) :
         return ArticleViewHolder(view, onItemClick)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
 
     override fun getItemCount(): Int {
         return currentList.size
+    }
+
+    companion object {
+        const val DATE_PATTERN = "EEEE MMM dd, yyyy"
     }
 }
