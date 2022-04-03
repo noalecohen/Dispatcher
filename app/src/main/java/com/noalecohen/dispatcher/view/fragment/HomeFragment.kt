@@ -23,7 +23,7 @@ class HomeFragment : Fragment() {
     private val articlesModel: ArticlesViewModel by activityViewModels()
     private val authModel: AuthViewModel by activityViewModels()
     private lateinit var binding: FragmentHomeBinding
-    private var adapter = ArticleAdapter()
+    private var adapter = ArticleAdapter { position -> onListItemClick(position) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +45,10 @@ class HomeFragment : Fragment() {
         binding.homeRecyclerView.adapter = adapter
         binding.homeRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.homeRecyclerView.addItemDecoration(TopSpacingItemDecoration())
+    }
+
+    private fun onListItemClick(position: Int) {
+        Toast.makeText(context, adapter.currentList[position].title, Toast.LENGTH_LONG).show()
     }
 
     private fun subscribeObservers() {

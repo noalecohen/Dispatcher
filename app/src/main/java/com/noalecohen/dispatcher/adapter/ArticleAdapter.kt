@@ -11,7 +11,8 @@ import com.noalecohen.dispatcher.databinding.AdapterArticleItemBinding
 import com.noalecohen.dispatcher.model.response.Article
 import com.squareup.picasso.Picasso
 
-class ArticleAdapter : ListAdapter<Article, ArticleAdapter.ArticleViewHolder>(DiffCallback()) {
+class ArticleAdapter(private val onItemClick: (position: Int) -> Unit) :
+    ListAdapter<Article, ArticleAdapter.ArticleViewHolder>(DiffCallback()) {
 
     class DiffCallback : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -24,9 +25,14 @@ class ArticleAdapter : ListAdapter<Article, ArticleAdapter.ArticleViewHolder>(Di
         }
     }
 
-    class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ArticleViewHolder(itemView: View, private val onItemClick: (position: Int) -> Unit) :
+        RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private var binding: AdapterArticleItemBinding = AdapterArticleItemBinding.bind(itemView)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
 
         fun bind(article: Article) {
             binding.adapterArticleItemDate.text = article.publishedAt
@@ -35,12 +41,16 @@ class ArticleAdapter : ListAdapter<Article, ArticleAdapter.ArticleViewHolder>(Di
             binding.adapterArticleItemAbstract.text = article.description
             Picasso.get().load(article.urlToImage).into(binding.adapterArticleItemImage)
         }
+
+        override fun onClick(view: View) {
+            onItemClick(adapterPosition)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.adapter_article_item, parent, false)
-        return ArticleViewHolder(view)
+        return ArticleViewHolder(view, onItemClick)
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
