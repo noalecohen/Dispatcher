@@ -26,32 +26,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/logout_button_text"
-        app:layout_constraintBottom_toTopOf="@id/home_edit_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/home_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:hint="@string/add_country_code_hint"
-        app:layout_constraintBottom_toTopOf="@id/home_save_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_sign_out_button" />
-
-    <Button
-        android:id="@+id/home_save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/save_btn"
         app:layout_constraintBottom_toTopOf="@id/home_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_edit_text" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/home_title"
@@ -65,7 +43,7 @@
         app:layout_constraintBottom_toTopOf="@id/home_recycler_view"
         app:layout_constraintEnd_toEndOf="@id/end_guideline"
         app:layout_constraintStart_toStartOf="@id/start_guideline"
-        app:layout_constraintTop_toBottomOf="@id/home_save_button"
+        app:layout_constraintTop_toBottomOf="@id/home_sign_out_button"
         tools:text="Top Headlines in Israel" />
 
     <androidx.recyclerview.widget.RecyclerView

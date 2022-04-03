@@ -38,10 +38,11 @@ class HomeFragment : Fragment() {
         setRecyclerView()
         subscribeObservers()
         setSignoutButton()
-        setSaveButton()
     }
 
     private fun setRecyclerView() {
+        articlesModel.requestStateLiveData.postValue(RequestState.Loading)
+        articlesModel.fetchTopHeadlinesByCountry("us")
         binding.homeRecyclerView.adapter = adapter
         binding.homeRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.homeRecyclerView.addItemDecoration(TopSpacingItemDecoration())
@@ -83,14 +84,6 @@ class HomeFragment : Fragment() {
             authModel.signOut()
             var intent = Intent(activity, AuthActivity::class.java)
             startActivity(intent)
-        }
-    }
-
-    private fun setSaveButton() {
-        binding.homeSaveButton.setOnClickListener {
-            articlesModel.requestStateLiveData.postValue(RequestState.Loading)
-            val country = binding.homeEditText.text.toString()
-            articlesModel.fetchTopHeadlinesByCountry(country)
         }
     }
 }
