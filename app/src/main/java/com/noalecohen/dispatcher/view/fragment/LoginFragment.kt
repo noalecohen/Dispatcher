@@ -145,5 +145,5 @@ class LoginFragment : Fragment() {
         )
         editTextLayout.isErrorEnabled = false
     }
-    
+
 }

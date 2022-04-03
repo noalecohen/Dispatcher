@@ -6,18 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.databinding.FragmentHomeBinding
-import com.noalecohen.dispatcher.isValidInput
 import com.noalecohen.dispatcher.update
 import com.noalecohen.dispatcher.view.activity.AuthActivity
+import com.noalecohen.dispatcher.view.activity.MainActivity
+import com.noalecohen.dispatcher.viewmodel.ArticlesViewModel
 import com.noalecohen.dispatcher.viewmodel.AuthViewModel
-import com.noalecohen.dispatcher.viewmodel.HomeViewModel
+import com.noalecohen.dispatcher.viewstate.RequestState
 
 class HomeFragment : Fragment() {
-    private val model: HomeViewModel by activityViewModels()
+    private val articlesModel: ArticlesViewModel by activityViewModels()
     private val authModel: AuthViewModel by activityViewModels()
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: ArrayAdapter<String>
@@ -39,25 +41,35 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.homeListView.adapter = adapter
         subscribeObservers()
-        setSaveButton()
         setSignoutButton()
-    }
-
-    private fun setSaveButton() {
-        binding.homeSaveButton.setOnClickListener {
-            val body = binding.homeEditText.text.toString()
-            if (binding.homeEditText.isValidInput()) {
-                model.addBody(body)
-            }
-            binding.homeEditText.text.clear()
-        }
+        setSaveButton()
     }
 
     private fun subscribeObservers() {
-        model.bodies.observe(viewLifecycleOwner) { bodies ->
-            var bodiesNotNull =
-                bodies.filterNotNull().map { it.split(" ").take(2).joinToString(" ") }
-            adapter.update(bodiesNotNull)
+        articlesModel.articlesLiveData.observe(viewLifecycleOwner) { articles ->
+            adapter.update(articles.mapNotNull { it.title })
+        }
+
+        articlesModel.requestStateLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is RequestState.Success -> {
+                    articlesModel.requestStateLiveData.postValue(RequestState.Idle)
+                    (activity as MainActivity).showLoader(false)
+                    if (adapter.isEmpty) {
+                        Toast.makeText(context, R.string.empty_response, Toast.LENGTH_LONG).show()
+                    }
+                }
+                is RequestState.Error -> {
+                    articlesModel.requestStateLiveData.postValue(RequestState.Idle)
+                    (activity as MainActivity).showLoader(false)
+                    adapter.clear()
+                    Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
+                }
+                is RequestState.Loading -> {
+                    (activity as MainActivity).showLoader(true)
+                }
+
+            }
         }
     }
 
@@ -66,6 +78,14 @@ class HomeFragment : Fragment() {
             authModel.signOut()
             var intent = Intent(activity, AuthActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun setSaveButton() {
+        binding.homeSaveButton.setOnClickListener {
+            articlesModel.requestStateLiveData.postValue(RequestState.Loading)
+            val country = binding.homeEditText.text.toString()
+            articlesModel.fetchTopHeadlinesByCountry(country)
         }
     }
 }

@@ -2,6 +2,7 @@ package com.noalecohen.dispatcher.view.activity
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.tabs.TabLayout
@@ -13,6 +14,7 @@ import com.noalecohen.dispatcher.view.fragment.HomeFragment
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     var fragmentManager: FragmentManager? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingView()
@@ -57,6 +59,10 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         val index = binding.homePageBottomNav.selectedTabPosition
         outState.putInt(TAB_INDEX, index)
+    }
+
+    fun showLoader(toShow: Boolean) {
+        binding.mainProgressBar.visibility = if (toShow) View.VISIBLE else View.GONE
     }
 
     companion object {

@@ -3,11 +3,11 @@ package com.noalecohen.dispatcher.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseUser
-import com.noalecohen.dispatcher.model.AppRepository
+import com.noalecohen.dispatcher.repository.AuthRepository
 import com.noalecohen.dispatcher.viewstate.ViewState
 
 class AuthViewModel : ViewModel() {
-    private val appRepository = AppRepository()
+    private val appRepository = AuthRepository()
 
     val viewStateLiveDataRegister: MutableLiveData<ViewState> = MutableLiveData(ViewState.Idle)
     val viewStateLiveDataLogin: MutableLiveData<ViewState> = MutableLiveData(ViewState.Idle)

@@ -25,4 +25,6 @@
     <string name="empty_password_error_message">Please enter your password</string>
     <string name="empty_verify_password_error_message">Please enter your password again</string>
     <string name="different_passwords">Passwords are not the same</string>
+    <string name="add_country_code_hint">Add Country Code</string>
+    <string name="empty_response">"not found... try another country code"</string>
 </resources>

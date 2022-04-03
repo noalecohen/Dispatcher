@@ -11,9 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/logout_button_text"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/home_edit_text" />
 
     <EditText
@@ -21,27 +21,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:hint="@string/add_country_code_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_sign_out_button"
-        android:hint="@string/add_body_hint" />
+        app:layout_constraintBottom_toTopOf="@id/home_save_button" />
 
     <Button
         android:id="@+id/home_save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:text="@string/save_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_edit_text"
-        android:text="@string/save_btn" />
+        app:layout_constraintTop_toBottomOf="@id/home_edit_text"
+        app:layout_constraintBottom_toTopOf="@id/home_list_view" />
 
     <ListView
         android:id="@+id/home_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/home_save_button"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/home_save_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
