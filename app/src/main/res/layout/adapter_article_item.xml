@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="20dp"
+    app:cardUseCompatPadding="true"
     app:strokeColor="@color/article_stroke"
     app:strokeWidth="1px">
 
@@ -59,6 +60,7 @@
             android:layout_marginVertical="10dp"
             android:textColor="@color/article_title"
             android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/adapter_article_item_author"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"

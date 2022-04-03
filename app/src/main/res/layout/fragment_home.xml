@@ -61,6 +61,7 @@
         android:text="@string/temp_home_title"
         android:textColor="@color/home_title"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/home_recycler_view"
         app:layout_constraintEnd_toEndOf="@id/end_guideline"
         app:layout_constraintStart_toStartOf="@id/start_guideline"
