@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.databinding.AdapterArticleItemBinding
 import com.noalecohen.dispatcher.model.response.Article
+import com.squareup.picasso.Picasso
 
 class ArticleAdapter : ListAdapter<Article, ArticleAdapter.ArticleViewHolder>(DiffCallback()) {
 
@@ -32,6 +33,7 @@ class ArticleAdapter : ListAdapter<Article, ArticleAdapter.ArticleViewHolder>(Di
             binding.adapterArticleItemTitle.text = article.title
             binding.adapterArticleItemAuthor.text = article.author
             binding.adapterArticleItemAbstract.text = article.description
+            Picasso.get().load(article.urlToImage).into(binding.adapterArticleItemImage)
         }
     }
 
