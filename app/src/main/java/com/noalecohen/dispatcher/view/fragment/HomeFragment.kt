@@ -42,7 +42,7 @@ class HomeFragment : Fragment() {
 
     private fun setRecyclerView() {
         articlesModel.requestStateLiveData.postValue(RequestState.Loading)
-        articlesModel.fetchTopHeadlinesByCountry("us")
+        articlesModel.fetchTopHeadlinesByCountry(DEFAULT_COUNTRY_CODE)
         binding.homeRecyclerView.adapter = adapter
         binding.homeRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.homeRecyclerView.addItemDecoration(TopSpacingItemDecoration())
@@ -85,5 +85,9 @@ class HomeFragment : Fragment() {
             var intent = Intent(activity, AuthActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    companion object {
+        const val DEFAULT_COUNTRY_CODE = "us"
     }
 }
