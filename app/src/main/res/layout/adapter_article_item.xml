@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="20dp"
+    app:strokeColor="@color/article_stroke"
+    app:strokeWidth="1px">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -37,8 +41,11 @@
 
         <TextView
             android:id="@+id/adapter_article_item_date"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:textColor="@color/article_info"
+            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/adapter_article_item_title"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
@@ -47,8 +54,11 @@
 
         <TextView
             android:id="@+id/adapter_article_item_title"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:textColor="@color/article_title"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/adapter_article_item_author"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
@@ -57,8 +67,11 @@
 
         <TextView
             android:id="@+id/adapter_article_item_author"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:textColor="@color/article_info"
+            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/adapter_article_item_abstract"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
@@ -67,8 +80,11 @@
 
         <TextView
             android:id="@+id/adapter_article_item_abstract"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:textColor="@color/article_description"
+            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/adapter_article_item_button"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
@@ -77,13 +93,15 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/adapter_article_item_button"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="12dp"
             android:backgroundTint="@color/primary_button"
             android:stateListAnimator="@null"
             android:text="@string/navigate_to_dispatch_button"
             android:textColor="@color/white"
+            android:textSize="14sp"
             app:cornerRadius="20dp"
             app:icon="@drawable/ic_arrow_right"
             app:iconGravity="end"
@@ -94,4 +112,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

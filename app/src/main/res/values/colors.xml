@@ -18,4 +18,10 @@
     <color name="auth_hint">#5A5A89</color>
     <color name="error_message">#FD5959</color>
     <color name="auth_focused_edit_text_stroke">#262146</color>
+    <color name="article_title">#14142B</color>
+    <color name="article_info">#805A5A89</color>
+    <color name="article_description">#5A5A89</color>
+    <color name="home_title">#262146</color>
+    <color name="article_stroke">#D9DBE9</color>
+    <color name="home_background">#E5E5E5</color>
 </resources>
