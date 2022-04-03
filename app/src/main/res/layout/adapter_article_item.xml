@@ -30,9 +30,10 @@
 
         <ImageView
             android:id="@+id/adapter_article_item_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             app:layout_constraintBottom_toTopOf="@id/adapter_article_item_date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -85,6 +86,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
+            android:maxLines="3"
             android:textColor="@color/article_description"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/adapter_article_item_button"
