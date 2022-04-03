@@ -27,4 +27,5 @@
     <string name="different_passwords">Passwords are not the same</string>
     <string name="add_country_code_hint">Add Country Code</string>
     <string name="empty_response">"not found... try another country code"</string>
+    <string name="navigate_to_dispatch_button">NAVIGATE TO DISPATCH</string>
 </resources>
