@@ -13,10 +13,19 @@
         app:appLogo="@drawable/ic_logo"
         app:icon1="@drawable/ic_notifications"
         app:icon2="@drawable/ic_search"
-        app:layout_constraintBottom_toTopOf="@id/home_page_frame_content"
+        app:layout_constraintBottom_toTopOf="@id/home_page_filter_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.noalecohen.dispatcher.customview.CustomFilterBar
+        android:id="@+id/home_page_filter_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/home_page_frame_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_page_header" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/home_page_frame_content"
@@ -26,7 +35,7 @@
         app:layout_constraintBottom_toTopOf="@id/home_page_bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_page_header" />
+        app:layout_constraintTop_toBottomOf="@id/home_page_filter_bar" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/home_page_bottom_nav"

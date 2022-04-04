@@ -33,4 +33,5 @@
     <string name="clear_recent_searches_title_button">CLEAR</string>
     <string name="search_edit_text_hint">Search</string>
     <string name="search_empty_result_massage">We couldn\'t find any matches for your query</string>
+    <string name="filter_bar_sort_by_title">Sort by</string>
 </resources>

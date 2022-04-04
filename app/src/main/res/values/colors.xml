@@ -29,4 +29,5 @@
     <color name="clear_recent_searches_background_button">#D9DBE9</color>
     <color name="search_edit_text_hint">#805A5A89</color>
     <color name="search_input_layout_stroke">#D9DBE9</color>
+    <color name="filter_bar_title">#5A5A89</color>
 </resources>
