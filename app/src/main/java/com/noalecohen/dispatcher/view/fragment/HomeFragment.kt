@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.adapter.ArticleAdapter
 import com.noalecohen.dispatcher.databinding.FragmentHomeBinding
-import com.noalecohen.dispatcher.decoration.TopSpacingItemDecoration
 import com.noalecohen.dispatcher.view.activity.AuthActivity
 import com.noalecohen.dispatcher.view.activity.MainActivity
+import com.noalecohen.dispatcher.view.decoration.TopSpacingItemDecoration
 import com.noalecohen.dispatcher.viewmodel.ArticlesViewModel
 import com.noalecohen.dispatcher.viewmodel.AuthViewModel
 import com.noalecohen.dispatcher.viewstate.RequestState

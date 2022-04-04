@@ -36,9 +36,9 @@ class ArticlesViewModel : ViewModel() {
         }
     }
 
-    fun fetchTopHeadLinesByKeyword(keyword: String) {
+    fun fetchFilterResults(keyword: String) {
 
-        articlesRepository.fetchTopHeadLinesByKeyword(keyword) { result, error ->
+        articlesRepository.fetchFilterResults(keyword) { result, error ->
             if (result.isNotEmpty()) {
                 searchArticlesLiveData.postValue(result)
                 searchArticlesStateLiveData.postValue(RequestState.Success)

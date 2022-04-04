@@ -1,4 +1,4 @@
-package com.noalecohen.dispatcher.decoration
+package com.noalecohen.dispatcher.view.decoration
 
 import android.graphics.Rect
 import android.view.View

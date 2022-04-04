@@ -42,7 +42,7 @@ class SearchFragment : Fragment() {
     private fun setArrowButton() {
         binding.searchInputLayuot.setStartIconOnClickListener {
             Toast.makeText(context, "Done", Toast.LENGTH_LONG).show()
-            articlesModel.fetchTopHeadLinesByKeyword(binding.searchInputEditText.text.toString())
+            articlesModel.fetchFilterResults(binding.searchInputEditText.text.toString())
 //            activity?.supportFragmentManager?.beginTransaction()
 //                ?.replace(R.id.home_page_frame_content, HomeFragment())?.commit()
         }

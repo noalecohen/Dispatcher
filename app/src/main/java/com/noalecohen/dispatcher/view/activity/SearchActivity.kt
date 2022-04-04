@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.noalecohen.dispatcher.adapter.ArticleAdapter
 import com.noalecohen.dispatcher.databinding.ActivitySearchBinding
-import com.noalecohen.dispatcher.decoration.TopSpacingItemDecoration
+import com.noalecohen.dispatcher.view.decoration.TopSpacingItemDecoration
 import com.noalecohen.dispatcher.viewmodel.ArticlesViewModel
 import com.noalecohen.dispatcher.viewstate.RequestState
 
@@ -48,7 +48,7 @@ class SearchActivity : AppCompatActivity() {
     private fun setDoneAction() =
         binding.searchInputEditText.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                articlesModel.fetchTopHeadLinesByKeyword(binding.searchInputEditText.text.toString())
+                articlesModel.fetchFilterResults(binding.searchInputEditText.text.toString())
                 articlesModel.searchArticlesStateLiveData.postValue(RequestState.Loading)
             }
             false

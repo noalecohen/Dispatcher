@@ -35,9 +35,9 @@ class ArticlesRepository {
     }
 
 
-    fun fetchTopHeadLinesByKeyword(keyword: String, callback: (List<Article>, String?) -> Unit) {
+    fun fetchFilterResults(keyword: String, callback: (List<Article>, String?) -> Unit) {
 
-        apiController.fetchTopHeadLinesByKeyword(keyword)
+        apiController.fetchFilterResults(keyword)
             .enqueue(object : Callback<News> {
                 override fun onResponse(call: Call<News>, response: Response<News>) {
                     if (response.isSuccessful) {
