@@ -44,8 +44,10 @@ class ArticlesViewModel : ViewModel() {
                 searchArticlesStateLiveData.postValue(RequestState.Success)
             } else {
                 if (error == null) {
+                    searchArticlesLiveData.postValue(emptyList())
                     searchArticlesStateLiveData.postValue(RequestState.Success)
                 } else {
+                    searchArticlesLiveData.postValue(emptyList())
                     searchArticlesStateLiveData.postValue(error.let { RequestState.Error(it) })
                 }
             }

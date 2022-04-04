@@ -1,6 +1,5 @@
 package com.noalecohen.dispatcher.view.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,10 +10,11 @@ import com.noalecohen.dispatcher.databinding.ActivityMainBinding
 import com.noalecohen.dispatcher.view.fragment.AccountFragment
 import com.noalecohen.dispatcher.view.fragment.FavoritesFragment
 import com.noalecohen.dispatcher.view.fragment.HomeFragment
+import com.noalecohen.dispatcher.view.fragment.SearchFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    var fragmentManager: FragmentManager? = null
+    lateinit var fragmentManager: FragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +40,11 @@ class MainActivity : AppCompatActivity() {
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
-                    0 -> fragmentManager!!.beginTransaction()
+                    0 -> fragmentManager.beginTransaction()
                         .replace(binding.homePageFrameContent.id, AccountFragment()).commit()
-                    1 -> fragmentManager!!.beginTransaction()
+                    1 -> fragmentManager.beginTransaction()
                         .replace(binding.homePageFrameContent.id, HomeFragment()).commit()
-                    2 -> fragmentManager!!.beginTransaction()
+                    2 -> fragmentManager.beginTransaction()
                         .replace(binding.homePageFrameContent.id, FavoritesFragment()).commit()
                     else -> {
                         Log.d(NOT_FOUND, "Tab not found")
@@ -69,8 +69,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setSearchButton() {
         binding.homePageHeader.setOnClickListenerIcon2 {
-            val intent = Intent(this, SearchActivity::class.java)
-            startActivity(intent)
+            fragmentManager.beginTransaction().add(binding.screenLayout.id, SearchFragment())
+                .addToBackStack("search").commit()
         }
     }
 
