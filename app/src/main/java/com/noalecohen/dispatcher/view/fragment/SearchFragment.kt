@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import com.noalecohen.dispatcher.databinding.FragmentSearchBinding
 import com.noalecohen.dispatcher.viewmodel.ArticlesViewModel
 
+//TODO: Delete?
 
 class SearchFragment : Fragment() {
 
