@@ -29,4 +29,8 @@
     <string name="empty_response">"not found... try another country code"</string>
     <string name="navigate_to_dispatch_button">NAVIGATE TO DISPATCH</string>
     <string name="temp_home_title">Top Headlines in Israel</string>
+    <string name="recent_searches">RECENR SEARCHES</string>
+    <string name="clear_recent_searches_title_button">CLEAR</string>
+    <string name="search_edit_text_hint">Search</string>
+    <string name="search_empty_result_massage">We couldn\'t find any matches for your query</string>
 </resources>

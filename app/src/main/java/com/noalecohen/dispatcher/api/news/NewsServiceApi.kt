@@ -15,4 +15,11 @@ interface NewsServiceApi {
     fun fetchTopHeadlinesByCountry(
         @Query(NewsServiceApiConstants.COUNTRY) country: String?,
     ): Call<News>
+
+
+    @Headers("${NewsServiceApiConstants.APIKEY_HEADER}:${BuildConfig.NEWS_API_KEY}")
+    @GET(NewsServiceApiConstants.TOP_HEADLINES_ENDPOINT)
+    fun fetchTopHeadLinesByKeyword(
+        @Query(NewsServiceApiConstants.KEYWORD) keyword: String
+    ): Call<News>
 }

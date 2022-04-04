@@ -1,5 +1,6 @@
 package com.noalecohen.dispatcher.view.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         bindingView()
         setBottomNavigation(savedInstanceState)
+        setSearchButton()
     }
 
     private fun bindingView() {
@@ -63,6 +65,13 @@ class MainActivity : AppCompatActivity() {
 
     fun showLoader(toShow: Boolean) {
         binding.mainProgressBar.visibility = if (toShow) View.VISIBLE else View.GONE
+    }
+
+    private fun setSearchButton() {
+        binding.homePageHeader.setOnClickListenerIcon2 {
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     companion object {

@@ -10,23 +10,50 @@ class ArticlesViewModel : ViewModel() {
     private val articlesRepository = ArticlesRepository()
 
     val articlesLiveData: MutableLiveData<List<Article>> = MutableLiveData()
-    val requestStateLiveData: MutableLiveData<RequestState> = MutableLiveData(RequestState.Idle)
+    val searchArticlesLiveData: MutableLiveData<List<Article>> = MutableLiveData()
+    val articlesStateLiveData: MutableLiveData<RequestState> = MutableLiveData(RequestState.Idle)
+    val searchArticlesStateLiveData: MutableLiveData<RequestState> =
+        MutableLiveData(RequestState.Idle)
+
+    init {
+        fetchTopHeadlinesByCountry(DEFAULT_COUNTRY_CODE)
+    }
 
     fun fetchTopHeadlinesByCountry(country: String) {
 
         articlesRepository.fetchTopHeadlinesByCountry(country) { result, error ->
             if (result.isNotEmpty()) {
                 articlesLiveData.postValue(result)
-                requestStateLiveData.postValue(RequestState.Success)
+                articlesStateLiveData.postValue(RequestState.Success)
 
             } else {
                 if (error == null) {
-                    requestStateLiveData.postValue(RequestState.Success)
+                    articlesStateLiveData.postValue(RequestState.Success)
                 } else {
-                    requestStateLiveData.postValue(error.let { RequestState.Error(it) })
+                    articlesStateLiveData.postValue(error.let { RequestState.Error(it) })
                 }
             }
-
         }
+    }
+
+    fun fetchTopHeadLinesByKeyword(keyword: String) {
+
+        articlesRepository.fetchTopHeadLinesByKeyword(keyword) { result, error ->
+            if (result.isNotEmpty()) {
+                searchArticlesLiveData.postValue(result)
+                searchArticlesStateLiveData.postValue(RequestState.Success)
+            } else {
+                if (error == null) {
+                    searchArticlesStateLiveData.postValue(RequestState.Success)
+                } else {
+                    searchArticlesStateLiveData.postValue(error.let { RequestState.Error(it) })
+                }
+            }
+        }
+
+    }
+
+    companion object {
+        const val DEFAULT_COUNTRY_CODE = "us"
     }
 }

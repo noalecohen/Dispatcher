@@ -41,8 +41,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setRecyclerView() {
-        articlesModel.requestStateLiveData.postValue(RequestState.Loading)
-        articlesModel.fetchTopHeadlinesByCountry(DEFAULT_COUNTRY_CODE)
+        articlesModel.articlesStateLiveData.postValue(RequestState.Loading)
         binding.homeRecyclerView.adapter = adapter
         binding.homeRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.homeRecyclerView.addItemDecoration(TopSpacingItemDecoration())
@@ -57,17 +56,17 @@ class HomeFragment : Fragment() {
             adapter.submitList(articles)
         }
 
-        articlesModel.requestStateLiveData.observe(viewLifecycleOwner) {
+        articlesModel.articlesStateLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is RequestState.Success -> {
-                    articlesModel.requestStateLiveData.postValue(RequestState.Idle)
+                    articlesModel.articlesStateLiveData.postValue(RequestState.Idle)
                     (activity as MainActivity).showLoader(false)
                     if (adapter.currentList.isEmpty()) {
                         Toast.makeText(context, R.string.empty_response, Toast.LENGTH_LONG).show()
                     }
                 }
                 is RequestState.Error -> {
-                    articlesModel.requestStateLiveData.postValue(RequestState.Idle)
+                    articlesModel.articlesStateLiveData.postValue(RequestState.Idle)
                     (activity as MainActivity).showLoader(false)
                     adapter.currentList.clear()
                     Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
@@ -85,9 +84,5 @@ class HomeFragment : Fragment() {
             var intent = Intent(activity, AuthActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    companion object {
-        const val DEFAULT_COUNTRY_CODE = "us"
     }
 }

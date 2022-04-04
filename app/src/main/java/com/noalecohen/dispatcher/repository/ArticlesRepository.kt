@@ -34,4 +34,28 @@ class ArticlesRepository {
         })
     }
 
+
+    fun fetchTopHeadLinesByKeyword(keyword: String, callback: (List<Article>, String?) -> Unit) {
+
+        apiController.fetchTopHeadLinesByKeyword(keyword)
+            .enqueue(object : Callback<News> {
+                override fun onResponse(call: Call<News>, response: Response<News>) {
+                    if (response.isSuccessful) {
+                        response.body()?.let { callback(it.articles, null) }
+                    } else {
+                        val errorResponse = Gson().fromJson(
+                            response.errorBody()?.charStream(),
+                            ErrorResponse::class.java
+                        )
+                        callback(emptyList(), errorResponse.message)
+                    }
+                }
+
+                override fun onFailure(call: Call<News>, t: Throwable) {
+                    callback(emptyList(), t.localizedMessage)
+                }
+
+            })
+    }
+
 }

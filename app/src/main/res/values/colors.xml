@@ -24,4 +24,9 @@
     <color name="home_title">#262146</color>
     <color name="article_stroke">#D9DBE9</color>
     <color name="home_background">#E5E5E5</color>
+    <color name="search_background">#F8F8FF</color>
+    <color name="search_title">#5A5A89</color>
+    <color name="clear_recent_searches_background_button">#D9DBE9</color>
+    <color name="search_edit_text_hint">#805A5A89</color>
+    <color name="search_input_layout_stroke">#D9DBE9</color>
 </resources>
