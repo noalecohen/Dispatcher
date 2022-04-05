@@ -22,33 +22,32 @@ class ArticlesViewModel : ViewModel() {
     fun fetchTopHeadlinesByCountry(country: String) {
 
         viewModelScope.launch(Dispatchers.IO) {
-            val result = articlesRepository.fetchTopHeadlinesByCountry(country)
-
-            if (result.isNullOrEmpty()) {
-                articlesLiveData.postValue(emptyList())
-                articlesStateLiveData.postValue(RequestState.Error("error..."))
-            } else {
-                articlesLiveData.postValue(result)
-                articlesStateLiveData.postValue(RequestState.Success)
+            articlesRepository.fetchTopHeadlinesByCountry(country).collect {
+                if (it.isNullOrEmpty()) {
+                    articlesLiveData.postValue(emptyList())
+                    articlesStateLiveData.postValue(RequestState.Error("error..."))
+                } else {
+                    articlesLiveData.postValue(it)
+                    articlesStateLiveData.postValue(RequestState.Success)
+                }
             }
         }
-
     }
 
     fun fetchFilterResults(keyword: String) {
 
         viewModelScope.launch(Dispatchers.IO) {
-            val result = articlesRepository.fetchFilterResults(keyword)
-
-            if (result.isNullOrEmpty()) {
-                searchArticlesLiveData.postValue(emptyList())
-                searchArticlesStateLiveData.postValue(RequestState.Error("error..."))
-            } else {
-                searchArticlesLiveData.postValue(result)
-                searchArticlesStateLiveData.postValue(RequestState.Success)
+            articlesRepository.fetchFilterResults(keyword).collect {
+                if (it.isNullOrEmpty()) {
+                    searchArticlesLiveData.postValue(emptyList())
+                    searchArticlesStateLiveData.postValue(RequestState.Error("error..."))
+                } else {
+                    searchArticlesLiveData.postValue(it)
+                    searchArticlesStateLiveData.postValue(RequestState.Success)
+                }
             }
-        }
 
+        }
     }
-    
+
 }
