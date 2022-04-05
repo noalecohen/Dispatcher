@@ -60,14 +60,10 @@ class HomeFragment : Fragment() {
                 is RequestState.Success -> {
                     articlesModel.articlesStateLiveData.postValue(RequestState.Idle)
                     (activity as MainActivity).showLoader(false)
-//                    if (adapter.currentList.isEmpty()) {
-//                        Toast.makeText(context, R.string.empty_response, Toast.LENGTH_LONG).show()
-//                    }
                 }
                 is RequestState.Error -> {
                     articlesModel.articlesStateLiveData.postValue(RequestState.Idle)
                     (activity as MainActivity).showLoader(false)
-                    //adapter.currentList.clear()
                     Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
                 }
                 is RequestState.Loading -> {

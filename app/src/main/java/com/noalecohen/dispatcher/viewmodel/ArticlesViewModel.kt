@@ -22,6 +22,7 @@ class ArticlesViewModel : ViewModel() {
     }
 
     fun fetchTopHeadlinesByCountry(country: String) {
+
         viewModelScope.launch {
             val result = articlesRepository.fetchTopHeadlinesByCountry(country)
 
@@ -32,21 +33,6 @@ class ArticlesViewModel : ViewModel() {
                 articlesLiveData.postValue(result)
                 articlesStateLiveData.postValue(RequestState.Success)
             }
-
-//            articlesRepository.fetchTopHeadlinesByCountry(country) { result, error ->
-//                if (result.isNotEmpty()) {
-//                    articlesLiveData.postValue(result)
-//                    articlesStateLiveData.postValue(RequestState.Success)
-//
-//                } else {
-//                    if (error == null) {
-//                        articlesStateLiveData.postValue(RequestState.Success)
-//                    } else {
-//                        articlesStateLiveData.postValue(error.let { RequestState.Error(it) })
-//                    }
-//                }
-//            }
-
         }
 
     }
@@ -64,21 +50,6 @@ class ArticlesViewModel : ViewModel() {
                 searchArticlesStateLiveData.postValue(RequestState.Success)
             }
         }
-
-//        articlesRepository.fetchFilterResults(keyword) { result, error ->
-//            if (result.isNotEmpty()) {
-//                searchArticlesLiveData.postValue(result)
-//                searchArticlesStateLiveData.postValue(RequestState.Success)
-//            } else {
-//                if (error == null) {
-//                    searchArticlesLiveData.postValue(emptyList())
-//                    searchArticlesStateLiveData.postValue(RequestState.Success)
-//                } else {
-//                    searchArticlesLiveData.postValue(emptyList())
-//                    searchArticlesStateLiveData.postValue(error.let { RequestState.Error(it) })
-//                }
-//            }
-//        }
 
     }
 

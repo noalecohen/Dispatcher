@@ -81,13 +81,10 @@ class SearchFragment : Fragment() {
             when (it) {
                 is RequestState.Success -> {
                     articlesModel.searchArticlesStateLiveData.postValue(RequestState.Idle)
-//                    articlesModel.searchArticlesLiveData.value?.isEmpty()
-//                        ?.let { it1 -> showEmptyResultIndicator(it1) }
                 }
                 is RequestState.Error -> {
                     articlesModel.searchArticlesStateLiveData.postValue(RequestState.Idle)
                     showEmptyResultIndicator(true)
-                    //adapter.currentList.clear()
                     Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
                 }
                 is RequestState.Loading -> {
