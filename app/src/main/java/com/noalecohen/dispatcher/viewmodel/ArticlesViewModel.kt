@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.noalecohen.dispatcher.model.response.Article
 import com.noalecohen.dispatcher.repository.ArticlesRepository
 import com.noalecohen.dispatcher.viewstate.RequestState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ArticlesViewModel : ViewModel() {
@@ -23,7 +24,7 @@ class ArticlesViewModel : ViewModel() {
 
     fun fetchTopHeadlinesByCountry(country: String) {
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val result = articlesRepository.fetchTopHeadlinesByCountry(country)
 
             if (result.isNullOrEmpty()) {
@@ -39,7 +40,7 @@ class ArticlesViewModel : ViewModel() {
 
     fun fetchFilterResults(keyword: String) {
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val result = articlesRepository.fetchFilterResults(keyword)
 
             if (result.isNullOrEmpty()) {
