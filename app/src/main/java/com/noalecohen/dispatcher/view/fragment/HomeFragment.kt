@@ -1,6 +1,5 @@
 package com.noalecohen.dispatcher.view.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.noalecohen.dispatcher.adapter.ArticleAdapter
 import com.noalecohen.dispatcher.databinding.FragmentHomeBinding
-import com.noalecohen.dispatcher.view.activity.AuthActivity
 import com.noalecohen.dispatcher.view.activity.MainActivity
 import com.noalecohen.dispatcher.view.decoration.TopSpacingItemDecoration
 import com.noalecohen.dispatcher.viewmodel.ArticlesViewModel
@@ -36,7 +34,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
         subscribeObservers()
-        setSignoutButton()
         fetchTopHeadlines()
     }
 
@@ -71,14 +68,6 @@ class HomeFragment : Fragment() {
                     (activity as MainActivity).showLoader(true)
                 }
             }
-        }
-    }
-
-    private fun setSignoutButton() {
-        binding.homeSignOutButton.setOnClickListener {
-            authModel.signOut()
-            var intent = Intent(activity, AuthActivity::class.java)
-            startActivity(intent)
         }
     }
 
