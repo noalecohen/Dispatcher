@@ -44,8 +44,7 @@
         app:layout_constraintBottom_toTopOf="@id/home_recycler_view"
         app:layout_constraintEnd_toEndOf="@id/end_guideline"
         app:layout_constraintStart_toStartOf="@id/start_guideline"
-        app:layout_constraintTop_toBottomOf="@id/home_sign_out_button"
-        tools:text="Top Headlines in Israel" />
+        app:layout_constraintTop_toBottomOf="@id/home_sign_out_button" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_recycler_view"

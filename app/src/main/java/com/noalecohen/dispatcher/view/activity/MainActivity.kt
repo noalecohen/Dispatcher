@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         bindingView()
         setBottomNavigation(savedInstanceState)
         setSearchButton()
+        showSearchLayout(false)
     }
 
     private fun bindingView() {
@@ -69,9 +70,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun setSearchButton() {
         binding.homePageHeader.setOnClickListenerIcon2 {
-            fragmentManager.beginTransaction().add(binding.screenLayout.id, SearchFragment())
+            fragmentManager.beginTransaction()
+                .add(binding.searchLayoutPlaceholder.id, SearchFragment())
                 .addToBackStack("search").commit()
+            showSearchLayout(true)
         }
+    }
+
+    private fun showSearchLayout(toShow: Boolean) {
+        binding.searchLayoutPlaceholder.visibility = if (toShow) View.VISIBLE else View.GONE
     }
 
     companion object {

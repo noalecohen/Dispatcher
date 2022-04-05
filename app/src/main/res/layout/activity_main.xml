@@ -76,9 +76,10 @@
         app:layout_constraintTop_toTopOf="@id/home_page_frame_content" />
 
     <FrameLayout
-        android:id="@+id/screen_layout"
+        android:id="@+id/search_layout_placeholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
