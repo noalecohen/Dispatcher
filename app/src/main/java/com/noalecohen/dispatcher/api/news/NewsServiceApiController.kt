@@ -10,4 +10,8 @@ class NewsServiceApiController : ApiController<NewsServiceApi>(NewsServiceApi::c
         return api.fetchTopHeadlinesByCountry(country)
     }
 
+    fun fetchFilterResults(keyword: String): Call<News> {
+        return api.fetchFilterResults(keyword)
+    }
+
 }

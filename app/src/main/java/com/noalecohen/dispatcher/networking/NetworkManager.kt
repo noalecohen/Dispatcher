@@ -1,6 +1,7 @@
 package com.noalecohen.dispatcher.networking
 
 import com.noalecohen.dispatcher.BuildConfig
+import com.noalecohen.dispatcher.api.news.NewsServiceApiConstants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -9,23 +10,22 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object NetworkManager {
 
-    lateinit var client: OkHttpClient
+    private var httpClient: OkHttpClient =
+        OkHttpClient.Builder().addInterceptor {
+            it.proceed(
+                it.request().newBuilder()
+                    .addHeader(NewsServiceApiConstants.APIKEY_HEADER, BuildConfig.NEWS_API_KEY)
+                    .build()
+            )
+        }.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+            .build()
 
     val retrofit: Retrofit by lazy {
         Retrofit
             .Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
-            .build()
-    }
-
-    init {
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
-        client = OkHttpClient
-            .Builder()
-            .addInterceptor(interceptor)
+            .client(httpClient)
             .build()
     }
 

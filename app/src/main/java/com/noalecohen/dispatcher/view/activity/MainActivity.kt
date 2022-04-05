@@ -10,15 +10,18 @@ import com.noalecohen.dispatcher.databinding.ActivityMainBinding
 import com.noalecohen.dispatcher.view.fragment.AccountFragment
 import com.noalecohen.dispatcher.view.fragment.FavoritesFragment
 import com.noalecohen.dispatcher.view.fragment.HomeFragment
+import com.noalecohen.dispatcher.view.fragment.SearchFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    var fragmentManager: FragmentManager? = null
+    lateinit var fragmentManager: FragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingView()
         setBottomNavigation(savedInstanceState)
+        setSearchButton()
+        showSearchLayout(false)
     }
 
     private fun bindingView() {
@@ -38,11 +41,11 @@ class MainActivity : AppCompatActivity() {
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
-                    0 -> fragmentManager!!.beginTransaction()
+                    0 -> fragmentManager.beginTransaction()
                         .replace(binding.homePageFrameContent.id, AccountFragment()).commit()
-                    1 -> fragmentManager!!.beginTransaction()
+                    1 -> fragmentManager.beginTransaction()
                         .replace(binding.homePageFrameContent.id, HomeFragment()).commit()
-                    2 -> fragmentManager!!.beginTransaction()
+                    2 -> fragmentManager.beginTransaction()
                         .replace(binding.homePageFrameContent.id, FavoritesFragment()).commit()
                     else -> {
                         Log.d(NOT_FOUND, "Tab not found")
@@ -63,6 +66,19 @@ class MainActivity : AppCompatActivity() {
 
     fun showLoader(toShow: Boolean) {
         binding.mainProgressBar.visibility = if (toShow) View.VISIBLE else View.GONE
+    }
+
+    private fun setSearchButton() {
+        binding.homePageHeader.setOnClickListenerIcon2 {
+            fragmentManager.beginTransaction()
+                .add(binding.searchLayoutPlaceholder.id, SearchFragment())
+                .addToBackStack("search").commit()
+            showSearchLayout(true)
+        }
+    }
+
+    private fun showSearchLayout(toShow: Boolean) {
+        binding.searchLayoutPlaceholder.visibility = if (toShow) View.VISIBLE else View.GONE
     }
 
     companion object {

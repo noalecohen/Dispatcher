@@ -27,4 +27,11 @@
     <string name="different_passwords">Passwords are not the same</string>
     <string name="add_country_code_hint">Add Country Code</string>
     <string name="empty_response">"not found... try another country code"</string>
+    <string name="navigate_to_dispatch_button">NAVIGATE TO DISPATCH</string>
+    <string name="temp_home_title">Top Headlines in USA</string>
+    <string name="recent_searches">RECENR SEARCHES</string>
+    <string name="clear_recent_searches_title_button">CLEAR</string>
+    <string name="search_edit_text_hint">Search</string>
+    <string name="search_empty_result_massage">We couldn\'t find any matches for your query</string>
+    <string name="filter_bar_sort_by_title">Sort by</string>
 </resources>
