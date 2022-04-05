@@ -92,14 +92,15 @@ class LoginFragment : Fragment() {
     private fun subscribeObservers() {
         model.viewStateLiveDataLogin.observe(viewLifecycleOwner) {
             when (it) {
-                is ViewState.Success -> activity?.let { fragmentActivity ->
-                    {
-                        model.viewStateLiveDataLogin.postValue(ViewState.Idle)
-                        (activity as AuthActivity).showLoader(false)
+                is ViewState.Success -> {
+                    model.viewStateLiveDataLogin.postValue(ViewState.Idle)
+                    (activity as AuthActivity).showLoader(false)
+                    activity?.let { fragmentActivity ->
                         val intent = Intent(fragmentActivity, MainActivity::class.java)
                         fragmentActivity.startActivity(intent)
                     }
                 }
+
                 is ViewState.Error -> {
                     model.viewStateLiveDataLogin.postValue(ViewState.Idle)
                     (activity as AuthActivity).showLoader(false)

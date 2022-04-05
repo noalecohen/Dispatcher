@@ -2,9 +2,12 @@ package com.noalecohen.dispatcher.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import com.noalecohen.dispatcher.repository.AuthRepository
 import com.noalecohen.dispatcher.viewstate.ViewState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
     private val appRepository = AuthRepository()
@@ -14,26 +17,37 @@ class AuthViewModel : ViewModel() {
 
     fun register(email: String, password: String) {
         viewStateLiveDataRegister.postValue(ViewState.Loading)
-        appRepository.register(email, password) { it ->
-            if (it.isSuccessful) {
-                it.result.user?.let {
-                    viewStateLiveDataRegister.postValue(ViewState.Success(it))
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = appRepository.register(email, password)
+
+            when (result) {
+                is AuthRepository.Response.Success -> {
+                    viewStateLiveDataRegister.postValue(result.authResult.user?.let {
+                        ViewState.Success(it)
+                    })
                 }
-            } else {
-                viewStateLiveDataRegister.postValue(ViewState.Error(it.exception))
+                is AuthRepository.Response.Error -> {
+                    viewStateLiveDataRegister.postValue(ViewState.Error(result.error))
+                }
             }
         }
     }
 
+
     fun login(email: String, password: String) {
         viewStateLiveDataLogin.postValue(ViewState.Loading)
-        appRepository.login(email, password) { it ->
-            if (it.isSuccessful) {
-                it.result.user?.let {
-                    viewStateLiveDataLogin.postValue(ViewState.Success(it))
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = appRepository.login(email, password)
+
+            when (result) {
+                is AuthRepository.Response.Success -> {
+                    viewStateLiveDataLogin.postValue(result.authResult.user?.let {
+                        ViewState.Success(it)
+                    })
                 }
-            } else {
-                viewStateLiveDataLogin.postValue(ViewState.Error(it.exception))
+                is AuthRepository.Response.Error -> {
+                    viewStateLiveDataLogin.postValue(ViewState.Error(result.error))
+                }
             }
         }
     }
