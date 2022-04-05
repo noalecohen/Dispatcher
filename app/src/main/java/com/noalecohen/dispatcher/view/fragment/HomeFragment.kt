@@ -38,6 +38,7 @@ class HomeFragment : Fragment() {
         setRecyclerView()
         subscribeObservers()
         setSignoutButton()
+        fetchTopHeadlines()
     }
 
     private fun setRecyclerView() {
@@ -83,6 +84,15 @@ class HomeFragment : Fragment() {
             authModel.signOut()
             var intent = Intent(activity, AuthActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun fetchTopHeadlines() {
+        articlesModel.articlesStateLiveData.postValue(RequestState.Loading)
+        context?.resources?.configuration?.locale?.country?.let {
+            articlesModel.fetchTopHeadlinesByCountry(
+                it
+            )
         }
     }
 }

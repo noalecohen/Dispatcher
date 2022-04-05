@@ -15,9 +15,6 @@ class ArticlesViewModel : ViewModel() {
     val searchArticlesStateLiveData: MutableLiveData<RequestState> =
         MutableLiveData(RequestState.Idle)
 
-    init {
-        fetchTopHeadlinesByCountry(DEFAULT_COUNTRY_CODE)
-    }
 
     fun fetchTopHeadlinesByCountry(country: String) {
 
@@ -54,8 +51,5 @@ class ArticlesViewModel : ViewModel() {
         }
 
     }
-
-    companion object {
-        const val DEFAULT_COUNTRY_CODE = "us"
-    }
+    
 }
