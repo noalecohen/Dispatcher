@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.adapter.ArticleAdapter
 import com.noalecohen.dispatcher.databinding.FragmentHomeBinding
 import com.noalecohen.dispatcher.view.activity.AuthActivity
@@ -61,14 +60,14 @@ class HomeFragment : Fragment() {
                 is RequestState.Success -> {
                     articlesModel.articlesStateLiveData.postValue(RequestState.Idle)
                     (activity as MainActivity).showLoader(false)
-                    if (adapter.currentList.isEmpty()) {
-                        Toast.makeText(context, R.string.empty_response, Toast.LENGTH_LONG).show()
-                    }
+//                    if (adapter.currentList.isEmpty()) {
+//                        Toast.makeText(context, R.string.empty_response, Toast.LENGTH_LONG).show()
+//                    }
                 }
                 is RequestState.Error -> {
                     articlesModel.articlesStateLiveData.postValue(RequestState.Idle)
                     (activity as MainActivity).showLoader(false)
-                    adapter.currentList.clear()
+                    //adapter.currentList.clear()
                     Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
                 }
                 is RequestState.Loading -> {
