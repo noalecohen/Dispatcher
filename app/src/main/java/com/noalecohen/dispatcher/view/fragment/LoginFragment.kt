@@ -10,6 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.noalecohen.dispatcher.R
@@ -18,6 +19,7 @@ import com.noalecohen.dispatcher.view.activity.AuthActivity
 import com.noalecohen.dispatcher.view.activity.MainActivity
 import com.noalecohen.dispatcher.viewmodel.AuthViewModel
 import com.noalecohen.dispatcher.viewstate.ViewState
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
     private val model: AuthViewModel by activityViewModels()
@@ -46,14 +48,8 @@ class LoginFragment : Fragment() {
         passwordLayout = binding.loginPasswordLayout
         setSignupButton()
         setSwitchToRegisterButton()
-
-        emailEditText.addTextChangedListener {
-            resetEditTextView(emailEditText, emailLayout)
-        }
-        passwordEditText.addTextChangedListener {
-            resetEditTextView(passwordEditText, passwordLayout)
-        }
-
+        setInputListeners()
+        collectInputFlow()
     }
 
     private fun setSignupButton() {
@@ -92,16 +88,17 @@ class LoginFragment : Fragment() {
     private fun subscribeObservers() {
         model.viewStateLiveDataLogin.observe(viewLifecycleOwner) {
             when (it) {
-                is ViewState.Success -> activity?.let { fragmentActivity ->
-                    {
-                        model.viewStateLiveDataLogin.postValue(ViewState.Idle)
-                        (activity as AuthActivity).showLoader(false)
+                is ViewState.Success -> {
+                    (activity as AuthActivity).showLoader(false)
+                    activity?.let { fragmentActivity ->
                         val intent = Intent(fragmentActivity, MainActivity::class.java)
                         fragmentActivity.startActivity(intent)
+                        fragmentActivity.finish()
                     }
                 }
+
                 is ViewState.Error -> {
-                    model.viewStateLiveDataLogin.postValue(ViewState.Idle)
+                    model.resetViewStateLiveDataLogin()
                     (activity as AuthActivity).showLoader(false)
                     Toast.makeText(activity, it.error?.message, Toast.LENGTH_LONG)
                         .show()
@@ -144,6 +141,28 @@ class LoginFragment : Fragment() {
             )
         )
         editTextLayout.isErrorEnabled = false
+    }
+
+    private fun setInputListeners() {
+        model.initInputStateFlow()
+
+        emailEditText.addTextChangedListener {
+            resetEditTextView(emailEditText, emailLayout)
+            model.setEmail(it.toString())
+        }
+        passwordEditText.addTextChangedListener {
+            resetEditTextView(passwordEditText, passwordLayout)
+            model.setPassword(it.toString())
+            model.setVerifyPassword(it.toString())
+        }
+    }
+
+    private fun collectInputFlow() {
+        lifecycleScope.launch {
+            model.isSubmitEnabled.collect {
+                binding.loginSigninButton.isEnabled = it
+            }
+        }
     }
 
 }

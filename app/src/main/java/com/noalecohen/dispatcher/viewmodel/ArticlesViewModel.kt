@@ -2,9 +2,12 @@ package com.noalecohen.dispatcher.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.noalecohen.dispatcher.model.response.Article
 import com.noalecohen.dispatcher.repository.ArticlesRepository
 import com.noalecohen.dispatcher.viewstate.RequestState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ArticlesViewModel : ViewModel() {
     private val articlesRepository = ArticlesRepository()
@@ -17,39 +20,46 @@ class ArticlesViewModel : ViewModel() {
 
 
     fun fetchTopHeadlinesByCountry(country: String) {
-
-        articlesRepository.fetchTopHeadlinesByCountry(country) { result, error ->
-            if (result.isNotEmpty()) {
-                articlesLiveData.postValue(result)
-                articlesStateLiveData.postValue(RequestState.Success)
-
-            } else {
-                if (error == null) {
-                    articlesStateLiveData.postValue(RequestState.Success)
+        articlesStateLiveData.postValue(RequestState.Loading)
+        viewModelScope.launch(Dispatchers.IO) {
+            articlesRepository.fetchTopHeadlinesByCountry(country).collect {
+                if (it.isNullOrEmpty()) {
+                    articlesLiveData.postValue(emptyList())
+                    articlesStateLiveData.postValue(RequestState.Error("error..."))
                 } else {
-                    articlesStateLiveData.postValue(error.let { RequestState.Error(it) })
+                    articlesLiveData.postValue(it)
+                    articlesStateLiveData.postValue(RequestState.Success)
                 }
             }
         }
     }
 
     fun fetchFilterResults(keyword: String) {
-
-        articlesRepository.fetchFilterResults(keyword) { result, error ->
-            if (result.isNotEmpty()) {
-                searchArticlesLiveData.postValue(result)
-                searchArticlesStateLiveData.postValue(RequestState.Success)
-            } else {
-                if (error == null) {
+        searchArticlesStateLiveData.postValue(RequestState.Loading)
+        viewModelScope.launch(Dispatchers.IO) {
+            articlesRepository.fetchFilterResults(keyword).collect {
+                if (it.isNullOrEmpty()) {
                     searchArticlesLiveData.postValue(emptyList())
-                    searchArticlesStateLiveData.postValue(RequestState.Success)
+                    searchArticlesStateLiveData.postValue(RequestState.Error("error..."))
                 } else {
-                    searchArticlesLiveData.postValue(emptyList())
-                    searchArticlesStateLiveData.postValue(error.let { RequestState.Error(it) })
+                    searchArticlesLiveData.postValue(it)
+                    searchArticlesStateLiveData.postValue(RequestState.Success)
                 }
             }
-        }
 
+        }
     }
-    
+
+    fun resetArticlesStateLiveData() {
+        articlesStateLiveData.postValue(RequestState.Idle)
+    }
+
+    fun resetSearchArticlesStateLiveData() {
+        searchArticlesStateLiveData.postValue(RequestState.Idle)
+    }
+
+    fun resetSearchArticlesLiveData() {
+        searchArticlesLiveData.postValue(emptyList())
+    }
+
 }

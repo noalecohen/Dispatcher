@@ -1,6 +1,5 @@
 package com.noalecohen.dispatcher.view.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,19 +8,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.noalecohen.dispatcher.R
 import com.noalecohen.dispatcher.adapter.ArticleAdapter
 import com.noalecohen.dispatcher.databinding.FragmentHomeBinding
-import com.noalecohen.dispatcher.view.activity.AuthActivity
 import com.noalecohen.dispatcher.view.activity.MainActivity
 import com.noalecohen.dispatcher.view.decoration.TopSpacingItemDecoration
 import com.noalecohen.dispatcher.viewmodel.ArticlesViewModel
-import com.noalecohen.dispatcher.viewmodel.AuthViewModel
 import com.noalecohen.dispatcher.viewstate.RequestState
 
 class HomeFragment : Fragment() {
     private val articlesModel: ArticlesViewModel by activityViewModels()
-    private val authModel: AuthViewModel by activityViewModels()
     private lateinit var binding: FragmentHomeBinding
     private var adapter = ArticleAdapter { position -> onListItemClick(position) }
 
@@ -37,12 +32,10 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
         subscribeObservers()
-        setSignoutButton()
         fetchTopHeadlines()
     }
 
     private fun setRecyclerView() {
-        articlesModel.articlesStateLiveData.postValue(RequestState.Loading)
         binding.homeRecyclerView.adapter = adapter
         binding.homeRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.homeRecyclerView.addItemDecoration(TopSpacingItemDecoration())
@@ -60,16 +53,12 @@ class HomeFragment : Fragment() {
         articlesModel.articlesStateLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is RequestState.Success -> {
-                    articlesModel.articlesStateLiveData.postValue(RequestState.Idle)
+                    articlesModel.resetArticlesStateLiveData()
                     (activity as MainActivity).showLoader(false)
-                    if (adapter.currentList.isEmpty()) {
-                        Toast.makeText(context, R.string.empty_response, Toast.LENGTH_LONG).show()
-                    }
                 }
                 is RequestState.Error -> {
-                    articlesModel.articlesStateLiveData.postValue(RequestState.Idle)
+                    articlesModel.resetArticlesStateLiveData()
                     (activity as MainActivity).showLoader(false)
-                    adapter.currentList.clear()
                     Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
                 }
                 is RequestState.Loading -> {
@@ -79,16 +68,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setSignoutButton() {
-        binding.homeSignOutButton.setOnClickListener {
-            authModel.signOut()
-            var intent = Intent(activity, AuthActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
     private fun fetchTopHeadlines() {
-        articlesModel.articlesStateLiveData.postValue(RequestState.Loading)
         context?.resources?.configuration?.locale?.country?.let {
             articlesModel.fetchTopHeadlinesByCountry(
                 it

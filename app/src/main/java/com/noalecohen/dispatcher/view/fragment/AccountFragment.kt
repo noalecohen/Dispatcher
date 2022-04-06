@@ -1,67 +1,41 @@
 package com.noalecohen.dispatcher.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.noalecohen.dispatcher.R.layout
 import com.noalecohen.dispatcher.databinding.FragmentAccountBinding
-import com.noalecohen.dispatcher.isValidInput
-import com.noalecohen.dispatcher.update
-import com.noalecohen.dispatcher.viewmodel.AccountViewModel
+import com.noalecohen.dispatcher.view.activity.AuthActivity
+import com.noalecohen.dispatcher.viewmodel.AuthViewModel
 
 
 class AccountFragment : Fragment() {
-    private val model: AccountViewModel by activityViewModels()
+    private val authModel: AuthViewModel by activityViewModels()
     private lateinit var binding: FragmentAccountBinding
-    private lateinit var adapter: ArrayAdapter<String>
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        adapter = ArrayAdapter(requireContext(), layout.list_item, mutableListOf())
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d(
-            NEW_INSTANCE_INDICATOR,
-            "New instance of AccountFragment created, with orientation: ${resources.configuration.orientation}"
-        )
         binding = FragmentAccountBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.accountListView.adapter = adapter
-        subscribeObservers()
-        setSaveButton()
+        setSignoutButton()
     }
 
-    private fun setSaveButton() {
-        binding.accountSaveButton.setOnClickListener {
-            val title = binding.accountEditText.text.toString()
-            if (binding.accountEditText.isValidInput()) {
-                model.addTitle(title)
-            }
-            binding.accountEditText.text.clear()
+    private fun setSignoutButton() {
+        binding.accountSignoutButton.setOnClickListener {
+            authModel.signOut()
+            var intent = Intent(activity, AuthActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
         }
     }
 
-    private fun subscribeObservers() {
-        model.titles.observe(viewLifecycleOwner) { titles ->
-            val titlesNotNull = titles.filterNotNull()
-            adapter.update(titlesNotNull)
-        }
-    }
-
-    companion object {
-        const val NEW_INSTANCE_INDICATOR = "Instance Indicator"
-    }
 }

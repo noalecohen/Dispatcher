@@ -39,6 +39,7 @@ class SplashFragment : Fragment() {
             activity?.let {
                 val intent = Intent(it, MainActivity::class.java)
                 it.startActivity(intent)
+                it.finish()
             }
         }
     }
