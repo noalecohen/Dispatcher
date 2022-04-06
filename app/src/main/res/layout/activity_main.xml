@@ -42,14 +42,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary_color"
+        android:paddingTop="7dp"
+        android:paddingBottom="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_page_frame_content"
         app:tabIndicator="@drawable/tab_indicator"
-        app:tabIndicatorColor="@color/white"
-        android:paddingBottom="14dp"
-        android:paddingTop="7dp">
+        app:tabIndicatorColor="@color/white">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
