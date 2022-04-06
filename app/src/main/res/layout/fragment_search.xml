@@ -32,12 +32,14 @@
         android:paddingBottom="20dp"
         app:endIconDrawable="@drawable/ic_cancel"
         app:endIconMode="custom"
+        app:endIconTint="@color/search_title"
         app:hintEnabled="false"
         app:layout_constraintBottom_toTopOf="@+id/search_filter_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:startIconDrawable="@drawable/ic_arrow_left">
+        app:startIconDrawable="@drawable/ic_arrow_left"
+        app:startIconTint="@color/search_title">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/search_input_edit_text"
