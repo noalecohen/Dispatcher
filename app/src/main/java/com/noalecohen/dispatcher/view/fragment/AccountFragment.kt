@@ -34,6 +34,7 @@ class AccountFragment : Fragment() {
             authModel.signOut()
             var intent = Intent(activity, AuthActivity::class.java)
             startActivity(intent)
+            requireActivity().finish()
         }
     }
 

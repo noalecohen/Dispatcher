@@ -90,16 +90,16 @@ class LoginFragment : Fragment() {
         model.viewStateLiveDataLogin.observe(viewLifecycleOwner) {
             when (it) {
                 is ViewState.Success -> {
-                    model.viewStateLiveDataLogin.postValue(ViewState.Idle)
                     (activity as AuthActivity).showLoader(false)
                     activity?.let { fragmentActivity ->
                         val intent = Intent(fragmentActivity, MainActivity::class.java)
                         fragmentActivity.startActivity(intent)
+                        fragmentActivity.finish()
                     }
                 }
 
                 is ViewState.Error -> {
-                    model.viewStateLiveDataLogin.postValue(ViewState.Idle)
+                    model.resetViewStateLiveDataLogin()
                     (activity as AuthActivity).showLoader(false)
                     Toast.makeText(activity, it.error?.message, Toast.LENGTH_LONG)
                         .show()

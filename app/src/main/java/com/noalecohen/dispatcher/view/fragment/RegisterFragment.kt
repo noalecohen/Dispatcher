@@ -128,15 +128,15 @@ class RegisterFragment : Fragment() {
         model.viewStateLiveDataRegister.observe(viewLifecycleOwner) {
             when (it) {
                 is ViewState.Success -> {
-                    model.viewStateLiveDataRegister.postValue(ViewState.Idle)
                     (activity as AuthActivity).showLoader(false)
                     activity?.let { fragmentActivity ->
                         val intent = Intent(fragmentActivity, MainActivity::class.java)
                         fragmentActivity.startActivity(intent)
+                        fragmentActivity.finish()
                     }
                 }
                 is ViewState.Error -> {
-                    model.viewStateLiveDataRegister.postValue(ViewState.Idle)
+                    model.resetViewStateLiveDataRegister()
                     (activity as AuthActivity).showLoader(false)
                     Toast.makeText(activity, it.error?.message, Toast.LENGTH_LONG)
                         .show()

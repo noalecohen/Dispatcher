@@ -20,7 +20,7 @@ class ArticlesViewModel : ViewModel() {
 
 
     fun fetchTopHeadlinesByCountry(country: String) {
-
+        articlesStateLiveData.postValue(RequestState.Loading)
         viewModelScope.launch(Dispatchers.IO) {
             articlesRepository.fetchTopHeadlinesByCountry(country).collect {
                 if (it.isNullOrEmpty()) {
@@ -35,7 +35,7 @@ class ArticlesViewModel : ViewModel() {
     }
 
     fun fetchFilterResults(keyword: String) {
-
+        searchArticlesStateLiveData.postValue(RequestState.Loading)
         viewModelScope.launch(Dispatchers.IO) {
             articlesRepository.fetchFilterResults(keyword).collect {
                 if (it.isNullOrEmpty()) {
@@ -48,6 +48,18 @@ class ArticlesViewModel : ViewModel() {
             }
 
         }
+    }
+
+    fun resetArticlesStateLiveData() {
+        articlesStateLiveData.postValue(RequestState.Idle)
+    }
+
+    fun resetSearchArticlesStateLiveData() {
+        searchArticlesStateLiveData.postValue(RequestState.Idle)
+    }
+
+    fun resetSearchArticlesLiveData() {
+        searchArticlesLiveData.postValue(emptyList())
     }
 
 }

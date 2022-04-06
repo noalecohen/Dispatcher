@@ -36,7 +36,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun setRecyclerView() {
-        articlesModel.articlesStateLiveData.postValue(RequestState.Loading)
         binding.homeRecyclerView.adapter = adapter
         binding.homeRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.homeRecyclerView.addItemDecoration(TopSpacingItemDecoration())
@@ -54,11 +53,11 @@ class HomeFragment : Fragment() {
         articlesModel.articlesStateLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is RequestState.Success -> {
-                    articlesModel.articlesStateLiveData.postValue(RequestState.Idle)
+                    articlesModel.resetArticlesStateLiveData()
                     (activity as MainActivity).showLoader(false)
                 }
                 is RequestState.Error -> {
-                    articlesModel.articlesStateLiveData.postValue(RequestState.Idle)
+                    articlesModel.resetArticlesStateLiveData()
                     (activity as MainActivity).showLoader(false)
                     Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
                 }
@@ -70,7 +69,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun fetchTopHeadlines() {
-        articlesModel.articlesStateLiveData.postValue(RequestState.Loading)
         context?.resources?.configuration?.locale?.country?.let {
             articlesModel.fetchTopHeadlinesByCountry(
                 it

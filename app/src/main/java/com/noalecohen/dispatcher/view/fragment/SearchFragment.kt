@@ -46,9 +46,8 @@ class SearchFragment : Fragment() {
     }
 
     private fun setBackButton() {
-        articlesModel.searchArticlesLiveData.postValue(emptyList())
-        adapter.currentList.clear()
         binding.searchInputLayuot.setStartIconOnClickListener {
+            articlesModel.resetSearchArticlesLiveData()
             activity?.supportFragmentManager?.popBackStack()
         }
     }
@@ -57,7 +56,6 @@ class SearchFragment : Fragment() {
         binding.searchInputEditText.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 articlesModel.fetchFilterResults(binding.searchInputEditText.text.toString())
-                articlesModel.searchArticlesStateLiveData.postValue(RequestState.Loading)
             }
             false
         }
@@ -80,10 +78,10 @@ class SearchFragment : Fragment() {
         articlesModel.searchArticlesStateLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is RequestState.Success -> {
-                    articlesModel.searchArticlesStateLiveData.postValue(RequestState.Idle)
+                    articlesModel.resetSearchArticlesStateLiveData()
                 }
                 is RequestState.Error -> {
-                    articlesModel.searchArticlesStateLiveData.postValue(RequestState.Idle)
+                    articlesModel.resetSearchArticlesStateLiveData()
                     showEmptyResultIndicator(true)
                     Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
                 }

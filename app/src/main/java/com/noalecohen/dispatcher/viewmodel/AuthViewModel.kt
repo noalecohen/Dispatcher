@@ -92,4 +92,12 @@ class AuthViewModel : ViewModel() {
             return@combine isValidEmail and isValidPassword and isValidVerifyPassword and isEqualPasswords
         }
 
+    fun resetViewStateLiveDataLogin() {
+        viewStateLiveDataLogin.postValue(ViewState.Idle)
+    }
+
+    fun resetViewStateLiveDataRegister() {
+        viewStateLiveDataRegister.postValue(ViewState.Idle)
+    }
+
 }
