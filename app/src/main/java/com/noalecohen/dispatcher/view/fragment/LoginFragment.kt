@@ -48,7 +48,6 @@ class LoginFragment : Fragment() {
         passwordLayout = binding.loginPasswordLayout
         setSignupButton()
         setSwitchToRegisterButton()
-        initInput()
         setInputListeners()
         collectInputFlow()
     }
@@ -144,13 +143,9 @@ class LoginFragment : Fragment() {
         editTextLayout.isErrorEnabled = false
     }
 
-    private fun initInput() {
-        model.setEmail("")
-        model.setPassword("")
-        model.setVerifyPassword("")
-    }
-
     private fun setInputListeners() {
+        model.initInputStateFlow()
+
         emailEditText.addTextChangedListener {
             resetEditTextView(emailEditText, emailLayout)
             model.setEmail(it.toString())

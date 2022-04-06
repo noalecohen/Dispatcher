@@ -1,5 +1,6 @@
 package com.noalecohen.dispatcher.viewmodel
 
+import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -79,12 +80,15 @@ class AuthViewModel : ViewModel() {
         _verifyPassword.value = verifyPassword
     }
 
+    fun initInputStateFlow() {
+        _email.value = ""
+        _password.value = ""
+        _verifyPassword.value = ""
+    }
+
     val isSubmitEnabled: Flow<Boolean> =
         combine(_email, _password, _verifyPassword) { email, password, verifyPassword ->
-            val isValidEmail =
-                (email.length >= 3) && (email.contains("@") && (!email.startsWith("@")) && (!email.endsWith(
-                    "@"
-                )))
+            val isValidEmail = Patterns.EMAIL_ADDRESS.matcher(email).matches()
             val isValidPassword = password.length >= 6
             val isValidVerifyPassword = verifyPassword.length >= 6
             val isEqualPasswords = password == verifyPassword
