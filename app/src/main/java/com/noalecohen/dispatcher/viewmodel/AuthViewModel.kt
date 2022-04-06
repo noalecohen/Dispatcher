@@ -7,6 +7,9 @@ import com.google.firebase.auth.FirebaseUser
 import com.noalecohen.dispatcher.repository.AuthRepository
 import com.noalecohen.dispatcher.viewstate.ViewState
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
@@ -14,6 +17,10 @@ class AuthViewModel : ViewModel() {
 
     val viewStateLiveDataRegister: MutableLiveData<ViewState> = MutableLiveData(ViewState.Idle)
     val viewStateLiveDataLogin: MutableLiveData<ViewState> = MutableLiveData(ViewState.Idle)
+
+    private val _email = MutableStateFlow("")
+    private val _password = MutableStateFlow("")
+    private val _verifyPassword = MutableStateFlow("")
 
     fun register(email: String, password: String) {
         viewStateLiveDataRegister.postValue(ViewState.Loading)
@@ -59,4 +66,30 @@ class AuthViewModel : ViewModel() {
     fun signOut() {
         appRepository.signOut()
     }
+
+    fun setEmail(email: String) {
+        _email.value = email
+    }
+
+    fun setPassword(password: String) {
+        _password.value = password
+    }
+
+    fun setVerifyPassword(verifyPassword: String) {
+        _verifyPassword.value = verifyPassword
+    }
+
+    val isSubmitEnabled: Flow<Boolean> =
+        combine(_email, _password, _verifyPassword) { email, password, verifyPassword ->
+            val isValidEmail =
+                (email.length >= 3) && (email.contains("@") && (!email.startsWith("@")) && (!email.endsWith(
+                    "@"
+                )))
+            val isValidPassword = password.length >= 6
+            val isValidVerifyPassword = verifyPassword.length >= 6
+            val isEqualPasswords = password == verifyPassword
+
+            return@combine isValidEmail and isValidPassword and isValidVerifyPassword and isEqualPasswords
+        }
+
 }

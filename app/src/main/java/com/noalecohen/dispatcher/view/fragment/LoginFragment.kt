@@ -10,6 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.noalecohen.dispatcher.R
@@ -18,6 +19,7 @@ import com.noalecohen.dispatcher.view.activity.AuthActivity
 import com.noalecohen.dispatcher.view.activity.MainActivity
 import com.noalecohen.dispatcher.viewmodel.AuthViewModel
 import com.noalecohen.dispatcher.viewstate.ViewState
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
     private val model: AuthViewModel by activityViewModels()
@@ -46,14 +48,9 @@ class LoginFragment : Fragment() {
         passwordLayout = binding.loginPasswordLayout
         setSignupButton()
         setSwitchToRegisterButton()
-
-        emailEditText.addTextChangedListener {
-            resetEditTextView(emailEditText, emailLayout)
-        }
-        passwordEditText.addTextChangedListener {
-            resetEditTextView(passwordEditText, passwordLayout)
-        }
-
+        initInput()
+        setInputListeners()
+        collectInputFlow()
     }
 
     private fun setSignupButton() {
@@ -145,6 +142,32 @@ class LoginFragment : Fragment() {
             )
         )
         editTextLayout.isErrorEnabled = false
+    }
+
+    private fun initInput() {
+        model.setEmail("")
+        model.setPassword("")
+        model.setVerifyPassword("")
+    }
+
+    private fun setInputListeners() {
+        emailEditText.addTextChangedListener {
+            resetEditTextView(emailEditText, emailLayout)
+            model.setEmail(it.toString())
+        }
+        passwordEditText.addTextChangedListener {
+            resetEditTextView(passwordEditText, passwordLayout)
+            model.setPassword(it.toString())
+            model.setVerifyPassword(it.toString())
+        }
+    }
+
+    private fun collectInputFlow() {
+        lifecycleScope.launch {
+            model.isSubmitEnabled.collect {
+                binding.loginSigninButton.isEnabled = it
+            }
+        }
     }
 
 }

@@ -13,12 +13,10 @@ import com.noalecohen.dispatcher.databinding.FragmentHomeBinding
 import com.noalecohen.dispatcher.view.activity.MainActivity
 import com.noalecohen.dispatcher.view.decoration.TopSpacingItemDecoration
 import com.noalecohen.dispatcher.viewmodel.ArticlesViewModel
-import com.noalecohen.dispatcher.viewmodel.AuthViewModel
 import com.noalecohen.dispatcher.viewstate.RequestState
 
 class HomeFragment : Fragment() {
     private val articlesModel: ArticlesViewModel by activityViewModels()
-    private val authModel: AuthViewModel by activityViewModels()
     private lateinit var binding: FragmentHomeBinding
     private var adapter = ArticleAdapter { position -> onListItemClick(position) }
 
